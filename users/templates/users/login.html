@@ -1,0 +1,29 @@
+{% extends 'ecomm/base.html' %}
+<!-- {% load crispy_forms_tags %} -->
+{% block title %} login {% endblock %}
+{% block content %}
+<div class="user_container">
+  <div class="row">
+    <div class="col-md-8 offset-2 user-column mb-5 pb-5">
+      <div class="content mb-5">
+        <div class="login_form w3-card pb-5 ">
+            <form method="POST" class="form-group pl-5 pr-5 mt-5 pt-5 ">
+              {% csrf_token %}
+              <h3> Log In</h3>
+                {{ form| crispy }}
+                <div class="form-group pl-5 pr-5">
+                  <button class="btn btn-primary btn-block" type="submit">Login</button>
+                  <a class="link marginl" href="#"> forgot password?</a>
+                </div>
+            </form>
+            <div>
+              <div class="text-muted pl-5"> Dont have an account?
+                  <a class="link" href="{% url 'register'%}">Sign Up Now</a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

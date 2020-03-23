@@ -1,0 +1,157 @@
+{% extends 'ecomm/base.html' %}
+{% block title %} Homepage {% endblock %}
+{% block content %}
+    <div class="outer_container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="../../static/img/11.jpg" class="d-block w-100" alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img src="../../static/img/11.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div> -->
+
+    <div class="slider">
+      <div class="slide">
+        <div class="content">
+          <h2>We trade</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <img src="../../static/img/14.jpg" alt="">
+      </div>
+      <div class="slide">
+        <div class="content">
+          <h2>We secure</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <img src="../../static/img/15.jpg" alt="">
+      </div>
+      <div class="slide">
+        <div class="content">
+          <h2>We deliver</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <img src="../../static/img/16.jpg" alt="">
+      </div>
+      <div class="slide">
+        <div class="content">
+          <h2>We make you happy</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <img src="../../static/img/17.jpg" alt="">
+      </div>
+      <div class="slide">
+        <div class="content">
+          <h2>We Shoppy</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+        </div>
+        <img src="../../static/img/19.jpg" alt="">
+      </div>
+    </div>
+    <!-- End of slider -->
+    <!-- Products -->
+
+
+<!-- Parallax with cards -->
+    <div class="par-container" id="offers">
+      <div class="row">
+        <div class="pimg col-md-12">
+          <div class="layer">
+          </div>
+          <div class="ptext">
+            <div class="col-md-12">
+              <div class="container w3-center mt-5">
+                <div class="row">
+                  <div class="col-md-12 home-column">
+                    <div class="row products d-flex">
+                    {% if object_list %}
+                      {% for item in object_list %}
+                            <div class="w3-card">
+                              <div class="item">
+                                <div class="img1">
+                                  <img src="{{ item.image1.url }}" alt="">
+                                  <h4>{{ item.title }}</h4>
+                                </div>
+                                <div class="price">
+                                  <h5>{% if item.discount_price %}
+                                    <strike class="badge-secondary small mr-3">$ {{ item.price }}</strike>
+                                    <span class="badge-primary">$ {{ item.discount_price }}</span>
+                                  {% else %}
+                                    $ {{ item.price}}
+                                  {% endif %}</h5>
+                                </div>
+                                {{ item.get_category_display }}  <span class="badge-{{ item.get_label_display }} rounded ">{{ item.get_tag_display }}</span>
+                              </div>
+                              <a class="btn btn-block btn-success" href="{{ item.get_absolute_url }}">Details</a>
+                            </div>
+                      {% endfor %}
+                    {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if is_paginated %}
+                <div class="paginate">
+                  <nav class="center">
+                    <ul class="paginated d-flex" style="list-style-type: None">
+                      {% if page_obj.has_previous %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="?page= {{ page_obj.previous_page_number}}" aria-label="Previous">
+                          <strong><span aria-hidden="true">&laquo;</span>
+                          <span >Previous</span></strong>
+                        </a>
+                      </li>
+                      {% endif %}
+
+                      <li class="nav-item">
+                        <a class="nav-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
+                      </li>
+                      {% if page_obj.has_next %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="?page={{ page_obj.next_page_number}}">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span>Next</span>
+                        </a>
+                      </li>
+                      {% endif %}
+                    </ul>
+                  </nav>
+                </div>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-5 w3-center" id="services">
+          <h2>WE GUARANTEE</h2>
+          <div class="icons">
+            <div class="icon1">
+              <!-- <i class="fa fa-helicopter"></i> -->
+              <i class="fa fa-biking"></i>
+              <h5>Fast Delivery</h5>
+            </div>
+            <div class="icon2">
+              <i class="fa fa-shield-alt"></i>
+              <h5>High Security</h5>
+            </div>
+            <div class="icon3">
+              <i class="far fa-clock"></i>
+              <h5>24/7 Availability</h5>
+            </div>
+          </div>
+      </div>
+{% endblock %}

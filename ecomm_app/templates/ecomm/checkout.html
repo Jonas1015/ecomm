@@ -1,0 +1,51 @@
+{% extends 'ecomm/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Checkout {% endblock %}
+{% block content %}
+
+<div class="outer_container mt-5  pt-3">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="w3-card mt-5 mb-5">
+          <h1>CHECKOUT</h1>
+          <form>
+            {% csrf_token %}
+            <!-- {{ form| crispy }} -->
+            <div class="row">
+              <div class="col-md-12">
+                {{ form.country| as_crispy_field }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-6">
+                {{ form.region|as_crispy_field }}
+              </div>
+             <div class="col-6">
+               {{ form.street_address|as_crispy_field }}
+             </div>
+            </div>
+            <hr>
+            <div class="row mt-5 ">
+             <div class="col-6">
+               {{ form.same_billing_address|as_crispy_field }}
+             </div>
+             <div class="col-6">
+               {{ form.save_info|as_crispy_field }}
+             </div>
+            </div>
+            <hr>
+            <div class="row">
+             <div class="col-12">
+               {{ form.payment_option|as_crispy_field }}
+             </div>
+            </div>
+            <hr>
+            <button class="btn block" type="submit" name="button">Checkout</button>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

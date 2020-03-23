@@ -1,0 +1,49 @@
+{% extends 'ecomm/base.html' %}
+{% block title %} Product Details {% endblock %}
+{% block content %}
+
+<div class="outer_container">
+  <div class="row">
+    <div class="col-md-8 col offset-2 mt-5">
+      <div class="product mt-5">
+        <div class="w3-card mt-5">
+          <div class="item">
+            {% if object.image3 %}
+            <div class="img1">
+              <img src="{{ object.image1.url }}" alt="">
+            </div>
+            <div class="img3 d-flex">
+              <img src="{{ object.image2.url }}" alt="">
+              <img src="{{ object.image3.url }}" alt="">
+            </div>
+            {% else %}
+            <div class="img2 d-flex mb-5 pb-5">
+              <img src="{{ object.image1.url }}" alt="">
+              <img src="{{ object.image2.url }}" alt="">
+            </div>
+            {% endif %}
+            <div class="price ml-5">
+              <h4>NAME: {{ object.title }} </h4>
+              <h5>PRICE: {% if object.discount_price %}
+                 <strike class="badge-secondary small mr-3">$ {{ object.price }} </strike>
+                <span class="badge-primary">$ {{ object.discount_price }} </span>
+              {% else %}
+                $ {{ object.price}}
+              {% endif %}</h5>
+            </div>
+            <div class="ml-5"> CATEGORY:
+              {{ object.get_category_display }}  <span class="badge-{{ object.get_label_display }} rounded ">{{ item.get_tag_display }}</span>
+            </div>
+          </div><hr>
+          {{ object.description }} <hr>
+          {% if user.is_authenticated %}
+            <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
+            <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
