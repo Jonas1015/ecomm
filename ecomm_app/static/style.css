@@ -16,8 +16,11 @@ body {
 
 body nav {
   /* background: #a15106 !important; */
-  background: var(--theme) !important;
-  color: #ffffff;
+  background: var(--theme);
+}
+
+body nav .navbar-toggler span {
+  color: #ffffff !important;
 }
 
 .slider
@@ -121,6 +124,33 @@ body nav {
 
   }
 }
+@media (max-width: 900px)
+{
+  .slider .slide .content
+  {
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    /* background: var(--theme); */
+    padding: 20px;
+    z-index: 1;
+    color: #000;
+    opacity: 0.6;
+  }
+  .slider .slide .content h2
+  {
+    margin: 0;
+    padding: 0;
+    font-size: 48px;
+  }
+  .slider .slide .content p
+  {
+    margin: 10px 0 0;
+    padding: 0;
+    font-size: 18px;
+  }
+}
+
 /* End of slider */
 
 .carousel-item img {
@@ -143,7 +173,22 @@ body nav {
     height: 180px;
     padding: 0px 0px;
 }
+@media (max-width: 576px)
+{
+  .container .row .home-column .products .w3-card{
+      margin: 0px 0 10px 10px;
+      width: 150px;
+      height: auto;
+      padding: 0px 0px;
+      left: 20px;
 
+  }
+  .container .row .home-column .products .w3-card .item img {
+      width: 220px;
+      height: 180px;
+      padding: 0px 0px;
+  }
+}
 .paginate {
   background-image: none;
   /* background-color: transparent; */
@@ -177,7 +222,43 @@ body nav {
   margin: 20px 20px;
   padding: 32px;
 }
-
+@media (max-width: 576px) {
+  .icons .icon1, .icon2, .icon3 {
+    text-align: center;
+    font-size: 30px;
+    margin: 10px 0px;
+    padding:30px 10px 10px;
+    border: 1px solid var(--theme);
+    border-radius: 60px;
+  }
+  .icon2{
+    margin: 10px 30px 10px 30px;
+  }
+  .icon3{
+    margin: 20px 0px 0px 0px;
+    padding: 10px 0px;
+    border-radius: 50px;
+  }
+}
+@media (man-width: 768px)
+{
+  .icons .icon1, .icon2, .icon3 {
+    text-align: center;
+    font-size: 60px;
+    margin: 30px 50px 20px 10px;
+    padding:60px 30px 30px;
+    border: 1px solid var(--theme);
+    border-radius: 90px;
+  }
+  .icon2{
+    margin: 30px 90px;
+    padding: 30px 30px;
+  }
+  .icon3{
+    margin: 30px 30px;
+    padding: 32px;
+  }
+}
 /* Parralax Home*/
 
 .par-container {
