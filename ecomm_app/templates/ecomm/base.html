@@ -7,7 +7,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-      <!-- <link rel="stylesheet" type="text/css" href="{% static 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %}"> -->
+      <link rel="stylesheet" type="text/css" href="{% static 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
@@ -15,33 +15,35 @@
       <title>Shoppy | {% block title %} {% endblock %}</title>
   </head>
   <body>
-    <div class="col-sm-12">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-        <a class="navbar-brand" href="{% url 'ecomm_app:home' %}">Shoppy</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon" style="color: white;"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-nav mr-auto"></div>
-          <form class="form-inline">
-            {% if user.is_authenticated %}
-              <a href="{% url 'ecomm_app:order-summary' %}" class="mr-3">
-                <span class="badge-primary z-depth-1 pl-1 mr-1"> {{ request.user| cart_item_count }} </span>
-                <i class="fa fa-shopping-cart"></i>
-                <span class="clearfix ">Cart</span>
-              </a>
-              <a href="{% url 'profile' %}" class="mr-3"><i class="fa fa-cog"></i></a>
-              <a href="{% url 'logout' %}" class=""><i class="fa fa-sign-in-alt"></i></a>
-            {% else %}
-            <a href="{% url 'login' %}" class="mr-3">Login</a>
-            <h5>|</h5>
-            <a href="{% url 'register' %}" class="ml-3">Sign up</a>
-            {% endif %}
-          </form>
-      </nav>
-    </div>
-
+    <nav class="w3-bar">
+      <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item ">Shoppy</a>
+      <div class="w3-right">
+          <a href="{% url 'ecomm_app:order-summary' %}" class="w3-bar-item">
+            <span class="badge-primary z-depth-1 pl-1 mr-1"> {{ request.user| cart_item_count }} </span>
+            <i class="fa fa-shopping-cart"></i>
+            <span class="clearfix ">Cart</span>
+          </a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-user mr-3"></i> Profile</a>
+          <a href="{% url 'logout' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
+          {% else %}
+          <a href="{% url 'login' %}" class="w3-bar-item">Login</a>
+          <h5>|</h5>
+          <a href="{% url 'register' %}" class="w3-bar-item">Sign up</a>
+          {% endif %}
+          <a href="javascript:void(0)" class="w3-bar-item w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
+      </div>
+      <div id="demo" class="w3-bar-block w3-hide w3-right w3-hide-large w3-hide-medium">
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Profile</a>
+        <a href="{% url 'logout' %}" class="w3-bar-item "><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="w3-bar-item ">Login</a>
+        <h5>|</h5>
+        <a href="{% url 'register' %}" class="w3-bar-item ">Sign up</a>
+        {% endif %}
+      </div>
+    </nav>
     {% if messages %}
        {% for message in messages %}
         <div style="margin: 60px;" class="alert alert-{{ message.tags }} dismissible fade show" role="alert">
@@ -110,8 +112,20 @@
         </div>
       </div>
     </section>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("demo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
     <!-- ./Footer -->
-    </div>
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'fontawesome/js/all.js' %}"></script>

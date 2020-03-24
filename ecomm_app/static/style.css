@@ -17,9 +17,10 @@ body {
 body nav {
   /* background: #a15106 !important; */
   background: var(--theme);
+  color: #ffffff !important;
 }
 
-body nav .navbar-toggler span {
+body nav .navbar-toggler .navbar-toggler-icon {
   color: #ffffff !important;
 }
 
@@ -132,7 +133,6 @@ body nav .navbar-toggler span {
     left: 20px;
     background: #fff;
     /* background: var(--theme); */
-    padding: 20px;
     z-index: 1;
     color: #000;
     opacity: 0.6;
@@ -145,17 +145,13 @@ body nav .navbar-toggler span {
   }
   .slider .slide .content p
   {
-    margin: 10px 0 0;
+    margin: 0px 0 0;
     padding: 0;
     font-size: 18px;
   }
 }
 
 /* End of slider */
-
-.carousel-item img {
-  height: 450px !important;
-}
 
 /* products home page */
 .container .row .home-column .products .w3-card{
@@ -176,7 +172,7 @@ body nav .navbar-toggler span {
 @media (max-width: 576px)
 {
   .container .row .home-column .products .w3-card{
-      margin: 0px 0 10px 10px;
+      margin: 0px 0px 10px 10px;
       width: 150px;
       height: auto;
       padding: 0px 0px;
@@ -235,9 +231,9 @@ body nav .navbar-toggler span {
     margin: 10px 30px 10px 30px;
   }
   .icon3{
-    margin: 20px 0px 0px 0px;
-    padding: 10px 0px;
-    border-radius: 50px;
+    margin: 10px 20px 10px 0px;
+    padding: 20px 2px 0px;
+    border-radius: 60px;
   }
 }
 @media (man-width: 768px)
@@ -284,7 +280,26 @@ body nav .navbar-toggler span {
   width: 100%;
   height: 100%;
 }
-
+@media (max-width: 586px) {
+  .pimg {
+    background-image: url('img/7.jpg');
+    min-height: 400px;
+    position: relative;
+    opacity: 0.7;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  .pimg .layer {
+    background-color: rgba(0,0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
 
 /* product Detail View */
 

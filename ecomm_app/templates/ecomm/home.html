@@ -3,7 +3,7 @@
 {% block content %}
     <div class="outer_container">
       <div class="row">
-        <div class="col-md-12 col-sm-12">
+        <!-- <div class="col-md-12 col-sm-12"> -->
           <!-- <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -22,8 +22,7 @@
               <img src="../../static/img/11.jpg" class="d-block w-100" alt="...">
       </div>
     </div> -->
-
-    <div class="slider col-sm-12 mr-5 pr-5">
+    <div class="slider col-12 col-sm-12 mr-5 pr-5">
       <div class="slide">
         <div class="content">
           <h2>We trade</h2>
@@ -65,9 +64,9 @@
 
 
 <!-- Parallax with cards -->
-    <div class="par-container" id="offers">
+    <div class="par-container col-12"  id="offers">
       <div class="row">
-        <div class="pimg col-md-12">
+        <div class="pimg col-12 col-md-12">
           <div class="layer">
           </div>
           <div class="ptext">
@@ -136,22 +135,24 @@
         </div>
       </div>
     </div>
-    <div class="container mb-5 w3-center" id="services">
-          <h2>WE GUARANTEE</h2>
-          <div class="icons">
-            <div class="icon1">
-              <!-- <i class="fa fa-helicopter"></i> -->
-              <i class="fa fa-biking"></i>
-              <h5>Fast Delivery</h5>
-            </div>
-            <div class="icon2">
-              <i class="fa fa-shield-alt"></i>
-              <h5>High Security</h5>
-            </div>
-            <div class="icon3">
-              <i class="far fa-clock"></i>
-              <h5>24/7 Availability</h5>
-            </div>
+    <div class="row">
+      <div class="container mb-5 w3-center" id="services">
+        <h2>WE GUARANTEE</h2>
+        <div class="icons col-12">
+          <div class="icon1">
+            <!-- <i class="fa fa-helicopter"></i> -->
+            <i class="fa fa-biking"></i>
+            <h5>Fast Delivery</h5>
           </div>
+          <div class="icon2">
+            <i class="fa fa-shield-alt"></i>
+            <h5>High Security</h5>
+          </div>
+          <div class="icon3">
+            <i class="far fa-clock"></i>
+            <h5>24/7 Availability</h5>
+          </div>
+        </div>
       </div>
+    </div>
 {% endblock %}
