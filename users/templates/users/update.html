@@ -2,11 +2,11 @@
 {% load crispy_forms_tags %}
 {% block title %} Profile update {% endblock %}
 {% block content %}
-        <div class="update-card w3-card">
+        <div class="update-card w3-card col-12">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
-                  <legend class=" mb-4">{{ user.username|title }} Profile</legend>
+                  <legend class="mb-4">{{ user.username|title }} Profile</legend>
                   <img class="rounded-circle" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
                 </div>
                 <fieldset class="forms">

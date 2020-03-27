@@ -125,12 +125,12 @@ body nav .navbar-toggler .navbar-toggler-icon {
 
   }
 }
-@media (max-width: 900px)
+@media (max-width: 576px)
 {
   .slider .slide .content
   {
     bottom: 20px;
-    left: 20px;
+    left: 15px;
     background: #fff;
     /* background: var(--theme); */
     z-index: 1;
@@ -154,35 +154,73 @@ body nav .navbar-toggler .navbar-toggler-icon {
 /* End of slider */
 
 /* products home page */
-.container .row .home-column .products .w3-card{
-    margin: 0px 0 20px 20px;
-    width: 220px;
-    height: auto;
-    padding: 0px 0px;
-    background: #a14106;
-    position: relative;
-    left: 70px;
-
+.product-container .row .home-column .products {
+  position: relative;
+  left: 4%;
+  width: 90%;
 }
-.container .row .home-column .products .w3-card .item img {
-    width: 220px;
-    height: 180px;
-    padding: 0px 0px;
+.product-container .row .home-column .products .w3-card {
+  margin: 0px 30px 20px 20px;
+  width: 220px;
+  height: auto;
+  padding: 0px 0px 10px;
+  background: #fff;
+  color: #000;
+  position: relative;
+  left: 70px;
+  border: 2px solid #fff;
+  opacity: 0.8;
+}
+.product-container .row .home-column .products .w3-card .item img {
+  width: 217px;
+  height: 180px;
+  padding: 0px 2px;
+  margin: 0px 0px 0px 0px;
+  border: 1px solid var(--theme);
+}
+.product-container .row .home-column .products .w3-card .btn {
+  background-color: var(--theme);
+  width:95%;
+  border-radius: 0%;
+  margin-top: 10px;
+  color: #fff;
 }
 @media (max-width: 576px)
 {
-  .container .row .home-column .products .w3-card{
-      margin: 0px 0px 10px 10px;
-      width: 150px;
-      height: auto;
-      padding: 0px 0px;
-      left: 20px;
-
+  .product-container .row .home-column .products {
+    position: relative;
+    left: 1%;
+    width: 30%;
+    display: grid;
+    grid-template-columns: auto auto;
   }
-  .container .row .home-column .products .w3-card .item img {
-      width: 220px;
-      height: 180px;
-      padding: 0px 0px;
+  .product-container .row .home-column .products .w3-card {
+    margin: 0px 20px 10px 15px;
+    width: 100%;
+    height: auto;
+    padding:10px 0px;
+    background: #fff;
+    color: #000;
+    position: relative;
+    left:0%;
+    border-right: 0px solid rgba(0,0, 0, 0.5);
+    border-left: 10px solid rgba(0,0, 0, 0.5);
+    /* border: 2px solid #fff; */
+    opacity: 0.8;
+  }
+  .product-container .row .home-column .products .w3-card .item img {
+    width: 130px;
+    height: 130px;
+    padding: 0px 1px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid var(--theme);
+  }
+  .product-container .row .home-column .products .w3-card .btn {
+    background-color: var(--theme);
+    width:95%;
+    border-radius: 0%;
+    margin-top: 10px;
+    color: #fff;
   }
 }
 .paginate {
@@ -192,7 +230,17 @@ body nav .navbar-toggler .navbar-toggler-icon {
 .paginate nav {
   margin: 0 40%;
 }
-
+.paginate nav ul {
+  list-style-type: None;
+}
+@media (max-width: 576px) {
+  .paginate nav {
+    margin: 0 20%;
+  }
+  .paginate nav ul {
+    list-style-type: None;
+  }
+}
 
 .icons {
   display: flex;
@@ -222,7 +270,7 @@ body nav .navbar-toggler .navbar-toggler-icon {
   .icons .icon1, .icon2, .icon3 {
     text-align: center;
     font-size: 30px;
-    margin: 10px 0px;
+    margin: 10px 0px 10px 10px;
     padding:30px 10px 10px;
     border: 1px solid var(--theme);
     border-radius: 60px;
@@ -302,19 +350,132 @@ body nav .navbar-toggler .navbar-toggler-icon {
 }
 
 /* product Detail View */
-
-.outer_container .row .col .product .w3-card {
-  width: 500px ;
-  height: 690px;
-  margin: 10px 140px 20px;
-  text-align: center;
+.outer_container .row .col .product {
+  width: 100%;
+  margin: 0px 40px 30px 0px;
+  position: relative;
+  top: 50px;
   /* background-color: #c9c7c1; */
 }
-.outer_container .row .col .product .w3-card .item .img1 img {
- width: 100%;
- height: 220px;
+.outer_container .row .col .product .item {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.outer_container .row .col .product .item .images {
+  position: relative;
+  width: 70%;
+  padding: 0px;
+  margin: 0px 0px 0px 50px;
+  height: 530px;
+  left: 40px;
+}
+.outer_container .row .col .product .item .images div img {
+  border: 2px solid var(--theme);
 }
 
+.outer_container .row .col .product .item .img1 img {
+ width: 85%;
+ height: 280px;
+}
+.outer_container .row .col .product .item .img2 {
+  display: grid;
+  grid-template-columns: auto auto;
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+.outer_container .row .col .product .item .img2 .img-2-1 img{
+  width: 250px;
+  height: 220px;
+}
+.outer_container .row .col .product .item .img2 .img-2-2 img{
+  width: 250px;
+  height: 220px;
+}
+.outer_container .row .col .product .item .img3 img {
+ width: 42.1%;
+ height: 220px;
+}
+.outer_container .row .col .product .item .table {
+  position: relative;
+  height: 130px;
+  width: 95%;
+  padding-right: 100px;
+  right: 100px;
+}
+.outer_container .row .col .product .item .buttons {
+    position: relative;
+    left: 87%;
+    bottom: 300px;
+}
+.outer_container .row .col .product .item .buttons a {
+    width: 247px;
+}
+@media (max-width: 586px) {
+  .outer_container .row .col .product {
+    width: 100%;
+    margin: 0px 40px 60px 0px;
+    position: relative;
+    top: 30px;
+    /* background-color: #c9c7c1; */
+  }
+  .outer_container .row .col .product .item {
+    display: grid;
+    grid-template-columns: auto;
+  }
+  .outer_container .row .col .product .item .images {
+    position: relative;
+    width: 78%;
+    padding: 10px;
+    margin: 0px 0px 0px 0px;
+    height: 300px;
+    left: 25px;
+  }
+  .outer_container .row .col .product .item .images div img {
+    border: 2px solid var(--theme);
+  }
+
+  .outer_container .row .col .product .item .img1 img {
+   width: 88%;
+   height: 150px;
+  }
+  .outer_container .row .col .product .item .img2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100%;
+    height: 150px;
+  }
+  .outer_container .row .col .product .item .img2 .img-2-1 img{
+    width: 150px;
+    height: 230px;
+  }
+  .outer_container .row .col .product .item .img2 .img-2-2 img{
+    width: 150px;
+    height: 230px;
+  }
+  .outer_container .row .col .product .item .img3 img {
+   width: 43.5%;
+   height: 110px;
+   margin-top: 10px;
+  }
+  .outer_container .row .col .product .item .table {
+    position: relative;
+    height: 130px;
+    width: 320px;
+    margin: 25px 100px 25px 0px;
+    padding-right: 10px;
+    left: 7%;
+  }
+  .outer_container .row .col .product .item .buttons {
+      position: relative;
+      left: 15%;
+      bottom: 0%;
+  }
+  .outer_container .row .col .product .item .buttons a {
+      width: 247px;
+      margin: 5px;
+  }
+}
 
 /* Checkout Form */
 .outer_container .row .col-md-12 .w3-card{
@@ -341,48 +502,82 @@ body nav .navbar-toggler .navbar-toggler-icon {
 }
 
 /* User Profile */
-.s-card {
+.profile-container .row .content .profile_card {
   position: relative;
-  top: 90px;
-  width: 520px;
-  height: 456px;
-  margin-bottom: 120px;
+  width: 500px;
+  height: 480px;
   left: 30%;
+  margin:0px 0px 70px 0px;
+  top: 50px;
 }
-.s-card .elements {
-  margin-left: 15%
+.profile-container .row .content .profile_card .elements {
+  margin-left: 13%
 }
-.s-card .elements img {
+.profile-container .row .content .profile_card .elements img {
   margin: 10px 75px;
   width: 200px;
   height: 200px;
 }
-.s-card .elements h1 {
-  margin-left: 130px;
-}
-.s-card .elements h3 {
-  margin-left: 30px;
-}
-.s-card .elements .title {
-  margin-left: 120px;
-}
-.s-card .elements b {
-  margin-left: 150px;
-}
-.s-card .elements .social {
+.profile-container .row .content .profile_card .elements h1 {
   margin-left: 135px;
 }
-
+.profile-container .row .content .profile_card .elements h3 {
+  margin-left: 30px;
+}
+.profile-container .row .content .profile_card .elements .title {
+  margin-left: 120px;
+}
+.profile-container .row .content .profile_card .elements b {
+  margin-left: 155px;
+}
+.profile-container .row .content .profile_card .elements .social {
+  margin-left: 138px;
+}
+@media (max-width: 586px) {
+  .profile-container .row .content .profile_card {
+    position: relative;
+    width: 96%;
+    height: 480px;
+    left: 0%;
+    margin:0px 0px 70px 7px;
+    top: 50px;
+  }
+  .profile-container .row .content .profile_card .elements {
+    margin-left: 0%;
+    margin-right: 10%;
+  }
+  .profile-container .row .content .profile_card .elements img {
+    margin: 10px 65px;
+    width: 200px;
+    height: 200px;
+  }
+  .profile-container .row .content .profile_card .elements h1 {
+    margin-left: 120px;
+  }
+  .profile-container .row .content .profile_card .elements h3 {
+    margin-left: 45px;
+    font-size: 20px;
+  }
+  .profile-container .row .content .profile_card .elements .title {
+    margin-left: 110px;
+  }
+  .profile-container .row .content .profile_card .elements b {
+    margin-left: 145px;
+  }
+  .profile-container .row .content .profile_card .elements .social {
+    margin-left: 125px;
+  }
+}
 /* Update Profile */
 .update-card {
   position: relative;
   top: 100px;
-  left: 350px;
-  padding-top: 20px;
+  margin: 0px 350px 200px;
+  padding: 20px 20px 20px;
   width:500px;
 }
 .update-card form {
-  margin-bottom: 120px;
+  margin-bottom: 0px;
 }
 .update-card form .form-group legend {
   margin-left: 35%;
@@ -392,20 +587,72 @@ body nav .navbar-toggler .navbar-toggler-icon {
   width: 200px;
   margin-left: 27%;
 }
+@media (max-width: 576px) {
+  .update-card {
+    position: relative;
+    top: 20px;
+    margin: 0px 0px 60px 7px;
+    padding: 10px 10px 20px;
+    width: 94%;
+  }
+  .update-card form {
+    margin-bottom: 20px;
+  }
+  .update-card form .form-group legend {
+    margin-left: 25%;
+  }
+  .update-card form .form-group img {
+    height:200px;
+    width: 200px;
+    margin-left: 17%;
+  }
+}
 /* Login page */
+.login_container {
+  margin-bottom: 45px;
+}
 .login_form {
   position: relative;
-  top: 50px;
+  top: 60px;
+  margin-bottom: 20px;
+}
+@media (max-width: 576px) {
+  .login_form {
+    position: relative;
+    top: 40px;
   }
+  .login_container {
+    margin-bottom: 0px;
+  }
+}
+/* Logout page */
+.logout_container {
+  margin-top: 50px;
+  margin-right: 7px;
+  margin-bottom: 163px;
+}
 
-/* Register page */
-.register-form {
+@media (max-width: 576px)
+{
+  .logout_container {
+    margin-top: 50px;
+    margin-right: 7px;
+    margin-bottom: 110px;
+  }
+}
+  /* Register page */
+.register_form {
   width: 70%;
   position: relative;
-  top: 70px;
-  left: 15%;
-  padding: 30px 50px;
   margin-bottom: 100px;
+}
+@media (max-width: 576px) {
+  .register_form {
+    width: 94%;
+    position: relative;
+    margin: 10px 50px 100px 10px;
+    padding: 0px 0px;
+  }
 }
 
 

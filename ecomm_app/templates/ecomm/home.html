@@ -71,10 +71,10 @@
           </div>
           <div class="ptext">
             <div class="col-md-12">
-              <div class="container w3-center mt-5">
+              <div class="product-container w3-center mt-5">
                 <div class="row">
-                  <div class="col-md-sm-12 home-column">
-                    <div class="row products d-flex">
+                  <div class="home-column">
+                    <div class="row products">
                     {% if object_list %}
                       {% for item in object_list %}
                             <div class="w3-card">
@@ -84,16 +84,27 @@
                                   <h4>{{ item.title }}</h4>
                                 </div>
                                 <div class="price">
-                                  <h5>{% if item.discount_price %}
-                                    <strike class="badge-secondary small mr-3">$ {{ item.price }}</strike>
-                                    <span class="badge-primary">$ {{ item.discount_price }}</span>
-                                  {% else %}
-                                    $ {{ item.price}}
-                                  {% endif %}</h5>
+                                  <strong>
+                                    <h5>
+                                      {% if item.discount_price %}
+                                      <div class="discount-barge badge-warning small mr-3 ml-3">
+                                        <strike>{{ item.price }} Tsh</strike>
+                                      </div>
+                                      <div class="discount-price">
+                                        <span> {{ item.discount_price }} Tsh</span>
+                                      </div>
+                                      {% else %}
+                                      <div class="mt-4 pt-2">
+
+                                      </div>
+                                        <span>{{ item.price}}</span> Tsh
+                                      {% endif %}
+                                    </h5>
+                                  </strong>
                                 </div>
                                 {{ item.get_category_display }}  <span class="badge-{{ item.get_label_display }} rounded ">{{ item.get_tag_display }}</span>
                               </div>
-                              <a class="btn btn-block btn-success" href="{{ item.get_absolute_url }}">Details</a>
+                              <a class="btn" href="{{ item.get_absolute_url }}">Buy Now</a>
                             </div>
                       {% endfor %}
                     {% endif %}
@@ -104,7 +115,7 @@
                 {% if is_paginated %}
                 <div class="paginate">
                   <nav class="center">
-                    <ul class="paginated d-flex" style="list-style-type: None">
+                    <ul class="paginated d-flex">
                       {% if page_obj.has_previous %}
                       <li class="nav-item">
                         <a class="nav-link" href="?page= {{ page_obj.previous_page_number}}" aria-label="Previous">

@@ -1,38 +1,40 @@
 {% extends 'ecomm/base.html' %}
-{% load crispy_forms_tags %}
-{% block title %} user profile {% endblock %}
+{% block title %} User Profile {% endblock %}
 {% block content %}
-        <div class="s-card w3-card">
-          <div class="elements">
-            {% if user.username == 'jonas' %}
-                    <img class="rounded-circle" width="100%" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
-                    <h1>{{ user.username|title }}</h1>
-                    <h3>{{ user.email }}</h3>
-                    <p class="title">CEO & Founder</p>
-                    <p><b>IFM</b></p>
-                    <div class="social">
-                            <a href="#"><i class="fal fa-google"></i></a>
-                            <a href="#"><i class="fal fa-twitter"></i></a>
-                            <a href="#"><i class="fal fa-linkedin"></i></a>
-                            <a href="#"><i class="fal fa-facebook"></i></a>
-                    </div>
-            {% else %}
-            <div>
-                    <img class="rounded-circle" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
-                    <h1>{{ user.username|title }}</h1>
-                    <h3">{{ user.email }}</h3>
-                    <div class="social">
-                            <a href="#"><i class="fas fa-lg fa-google"></i></a>
-                            <a href="#"><i class="fas fa-lg fa-twitter"></i></a>
-                            <a href="#"><i class="fas fa-lg fa-linkedin"></i></a>
-                            <a href="#"><i class="fas fa-lg fa-facebook"></i></a>
-                    </div>
-
+      <div class="profile-container">
+        <div class="row">
+          <div class="content col-md-12">
+            <div class="profile_card w3-card col-12 ">
+              <div class="elements ">
+                {% if user.username == 'jonas' %}
+                  <img class="rounded-circle" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+                  <h1>{{ user.username|title }}</h1>
+                  <h3>{{ user.email }}</h3>
+                  <p class="title">CEO & Founder</p>
+                  <p><b>IFM</b></p>
+                  <div class="social">
+                          <a href="#"><i class="fa fa-google"></i></a>
+                          <a href="#"><i class="fa fa-twitter"></i></a>
+                          <a href="#"><i class="fa fa-linkedin"></i></a>
+                          <a href="#"><i class="fa fa-facebook"></i></a>
+                  </div>
+                {% else %}
+                  <img class="rounded-circle" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
+                  <h1>{{ user.username|title }}</h1>
+                  <h3">{{ user.email }}</h3>
+                  <div class="social">
+                          <a href="#"><i class="fa fa-lg fa-google"></i></a>
+                          <a href="#"><i class="fa fa-lg fa-twitter"></i></a>
+                          <a href="#"><i class="fa fa-lg fa-linkedin"></i></a>
+                          <a href="#"><i class="fa fa-lg fa-facebook"></i></a>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="button">
+                <a class="btn btn-primary btn-block" href="{% url 'update' %}"><i class="fa fa-edit mr-3"></i> <strong>Update</strong></a>
+              </div>
             </div>
-            {% endif %}
-          </div>
-          <div>
-            <a class="btn btn-primary btn-block" href="{% url 'update' %}"><i class="fa fa-edit mr-3"></i> <strong>Update</strong></a>
           </div>
         </div>
+      </div>
 {% endblock content %}
