@@ -102,7 +102,7 @@
                                     </h5>
                                   </strong>
                                 </div>
-                                {{ item.get_category_display }}  <span class="badge-{{ item.get_label_display }} rounded ">{{ item.get_tag_display }}</span>
+                                {{ item.category.name }}  <span class="badge-{{ item.get_label_display }} rounded ">{{ item.get_tag_display }}</span>
                               </div>
                               <a class="btn" href="{{ item.get_absolute_url }}">Buy Now</a>
                             </div>
@@ -117,7 +117,7 @@
                   <nav class="center">
                     <ul class="paginated d-flex">
                       {% if page_obj.has_previous %}
-                      <li class="nav-item">
+                      <li class="nav-item ">
                         <a class="nav-link" href="?page= {{ page_obj.previous_page_number}}" aria-label="Previous">
                           <strong><span aria-hidden="true">&laquo;</span>
                           <span >Previous</span></strong>
@@ -125,14 +125,14 @@
                       </li>
                       {% endif %}
 
-                      <li class="nav-item">
+                      <li class="nav-item ">
                         <a class="nav-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a>
                       </li>
                       {% if page_obj.has_next %}
-                      <li class="nav-item">
+                      <li class="nav-item ">
                         <a class="nav-link" href="?page={{ page_obj.next_page_number}}">
-                          <span aria-hidden="true">&raquo;</span>
-                          <span>Next</span>
+                          <strong><span aria-hidden="true">&raquo;</span>
+                          <span>Next</span></strong>
                         </a>
                       </li>
                       {% endif %}

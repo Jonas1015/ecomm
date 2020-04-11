@@ -20,8 +20,8 @@
                   </div>
                 {% else %}
                   <img class="rounded-circle" src="{{ user.profile.image.url }}" alt="{{ user.username }}">
-                  <h1>{{ user.username|title }}</h1>
-                  <h3">{{ user.email }}</h3>
+                  <h1 class="username">{{ user.username|title }}</h1>
+                  <h3 class="mail">{{ user.email }}</h3>
                   <div class="social">
                           <a href="#"><i class="fa fa-lg fa-google"></i></a>
                           <a href="#"><i class="fa fa-lg fa-twitter"></i></a>

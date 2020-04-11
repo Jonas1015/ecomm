@@ -158,38 +158,40 @@ body nav .navbar-toggler .navbar-toggler-icon {
   position: relative;
   left: 4%;
   width: 90%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
 }
 .product-container .row .home-column .products .w3-card {
-  margin: 0px 30px 20px 20px;
-  width: 220px;
-  height: auto;
-  padding: 0px 0px 10px;
-  background: #fff;
-  color: #000;
-  position: relative;
-  left: 70px;
-  border: 2px solid #fff;
-  opacity: 0.8;
+    margin: 0px 30px 20px 20px;
+    width: 220px;
+    height: auto;
+    padding: 0px 0px 10px;
+    background: #fff;
+    color: #000;
+    position: relative;
+    left: 70px;
+    border: 2px solid #fff;
+    opacity: 0.8;
 }
 .product-container .row .home-column .products .w3-card .item img {
-  width: 217px;
-  height: 180px;
-  padding: 0px 2px;
-  margin: 0px 0px 0px 0px;
-  border: 1px solid var(--theme);
+    width: 217px;
+    height: 180px;
+    padding: 0px 2px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid var(--theme);
 }
 .product-container .row .home-column .products .w3-card .btn {
-  background-color: var(--theme);
-  width:95%;
-  border-radius: 0%;
-  margin-top: 10px;
-  color: #fff;
+    background-color: var(--theme);
+    width:95%;
+    border-radius: 0%;
+    margin-top: 10px;
+    color: #fff;
 }
 @media (max-width: 576px)
 {
   .product-container .row .home-column .products {
     position: relative;
-    left: 1%;
+    left: 5%;
     width: 30%;
     display: grid;
     grid-template-columns: auto auto;
@@ -202,7 +204,7 @@ body nav .navbar-toggler .navbar-toggler-icon {
     background: #fff;
     color: #000;
     position: relative;
-    left:0%;
+    left:15%;
     border-right: 0px solid rgba(0,0, 0, 0.5);
     border-left: 10px solid rgba(0,0, 0, 0.5);
     /* border: 2px solid #fff; */
@@ -476,12 +478,54 @@ body nav .navbar-toggler .navbar-toggler-icon {
       margin: 5px;
   }
 }
+/* Cart */
+.cart_container {
+  margin-bottom: 217px;
+  margin-top: 100px;
+}
+@media (max-width: 586px) {
+  .cart_container {
+    position: relative;
+    left: -17%;
+    margin-bottom: 230px;
+    margin-top: 50px;
+  }
+  .cart_container .row .table-col .content table {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+    overflow-x: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+  }
+  .cart_container .row .table-col .content table {
+  }
+
+  .cart_container .row .table-col .content table th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even){background-color: #f2f2f2}
+
+  .cart_container .row .table-col .content .buttons {
+    margin-top: 20px;
+    position: relative;
+    right: 3%;
+    width: auto;
+  }
+}
+
 
 /* Checkout Form */
-.outer_container .row .col-md-12 .w3-card{
-  height: 650px;
+  .outer_container .row .col-md-12 .w3-card{
+  height: 680px;
   width: 700px;
   margin: 10px 10px;
+  padding: 10px;
   text-align: center;
   margin-left: 300px;
   /* background-color: #c9c7c1; */
@@ -499,6 +543,33 @@ body nav .navbar-toggler .navbar-toggler-icon {
   background-color: var(--theme);
   color: white;
   width: inherit;
+}
+@media (max-width: 586px) {
+
+    .outer_container .row .col-md-12 .w3-card{
+    height: 750px;
+    width: 95%;
+    margin: 0px 10px;
+    padding-top: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 70px;
+    /* background-color: #c9c7c1; */
+  }
+
+  .outer_container .row .col-md-12 .w3-card form{
+    height: 300px;
+    width: 270px;
+    padding-top: 40px !important;
+    margin-left: 35px;
+    /* background-color: #c9c7c1; */
+  }
+
+  .outer_container .row .col-md-12 .w3-card form .block{
+    background-color: var(--theme);
+    color: white;
+    width: inherit;
+  }
 }
 
 /* User Profile */
@@ -554,8 +625,15 @@ body nav .navbar-toggler .navbar-toggler-icon {
   .profile-container .row .content .profile_card .elements h1 {
     margin-left: 120px;
   }
+  .profile-container .row .content .profile_card .elements .username {
+    margin-left: 100px;
+  }
   .profile-container .row .content .profile_card .elements h3 {
     margin-left: 45px;
+    font-size: 20px;
+  }
+  .profile-container .row .content .profile_card .elements .mail {
+    margin-left: 95px;
     font-size: 20px;
   }
   .profile-container .row .content .profile_card .elements .title {
@@ -566,6 +644,7 @@ body nav .navbar-toggler .navbar-toggler-icon {
   }
   .profile-container .row .content .profile_card .elements .social {
     margin-left: 125px;
+    margin-bottom: 20px;
   }
 }
 /* Update Profile */

@@ -4,9 +4,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .forms import CheckoutForm
 from django.views.generic import ListView, DetailView, View
-from .models import Item, OrderItem, Order, BillingAddress
+import random
+from .forms import (
+        CheckoutForm,
+        addCategoryForm,
+        addSubcategoryForm,
+        addItemForm,
+)
+from .models import (
+        Item,
+        OrderItem,
+        Order,
+        Category,
+        Subcategory,
+        BillingAddress,
+)
 
 # Create your views here.
 class HomeView(ListView):
@@ -26,7 +39,7 @@ class OrderSummaryView(View):
             }
             return render(self.request, 'ecomm/cart.html', context)
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an active order")
+            messages.warning(self.request, "You do not have an active order")
             return redirect("/")
 
 
@@ -223,5 +236,169 @@ class CheckoutView(View):
             messages.warning(self.request, "Failed checkout!")
             return redirect('ecomm_app:checkout')
         except ObjectDoesNotExist:
-            messages.error(self.request, "You do not have an active order")
+            messages.warning(self.request, "You do not have an active order")
             return redirect("'ecomm_app:checkout'")
+
+# For Admin Panel
+# ITEMS
+
+def list_item(request):
+    all_items = Item.objects.filter(seller = request.user.id).order_by('id')
+    query = request.GET.get("q")
+    if query:
+        all_items = all_items.filter(title__icontains = query)
+    context = {
+        'items': all_items
+    }
+    myTemplate = 'ecomm/listItem.html'
+    return render (request, myTemplate, context)
+
+def add_item(request):
+    # form = addItemForm()
+    if request.method == 'POST':
+        form = addItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save(commit = False)
+            form.seller = request.user
+            form.save()
+            messages.success(request, f'Item added successfully')
+            return redirect('ecomm_app:add_item')
+        # return redirect('ecomm_app:add_item')
+    else:
+        form = addItemForm()
+    context = {
+        'form': form
+    }
+    myTemplate = 'ecomm/addItem.html'
+    return render(request, myTemplate, context)
+
+def update_item(request, slug):
+    instance = get_object_or_404(Item, slug = slug)
+    form = addItemForm(request.POST or None, instance = instance)
+    # print(form.product_name)
+    if request.method == 'POST':
+        form = addItemForm(request.POST, request.FILES, instance = instance)
+        if form.is_valid():
+            form.save(commit = False)
+            form.seller = request.user
+            form.save()
+            messages.success(request, f'Item has been updated successifully!')
+            return redirect ('ecomm_app:home')
+    context = {
+        'form': form,
+    }
+    myTemplate = 'ecomm/updateItem.html'
+    return render(request, myTemplate, context)
+
+
+def delete_item(request, slug):
+    get_data = get_object_or_404(Item, slug = slug)
+    get_data.delete()
+    messages.success(request, f'Item deleted successfull!')
+    return redirect('ecomm_app:home')
+
+
+# CATEGORY
+def list_category(request):
+    all_categories = Category.objects.all().order_by('id')
+    query = request.GET.get("q")
+    if query:
+        all_categories = all_categories.filter(name__icontains = query)
+    context = {
+    'categories': all_categories
+    }
+    myTemplate = 'ecomm/listCategory.html'
+    return render (request, myTemplate, context)
+
+def add_category(request):
+    form = addCategoryForm()
+    if request.method == 'POST':
+        form = addCategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Category added successfully')
+            return redirect('ecomm_app:add_category')
+        return redirect('ecomm_app:add_category')
+    else:
+        form = addCategoryForm()
+    context = {
+        'form': form
+    }
+    myTemplate = 'ecomm/addCategory.html'
+    return render(request, myTemplate, context)
+
+def update_category(request, id):
+    instance = get_object_or_404(Category, id = id)
+    form = addCategoryForm(request.POST or None, instance = instance)
+    # print(form.product_name)
+    if request.method == 'POST':
+        form = addCategoryForm(request.POST, request.FILES, instance = instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Category has been updated successifully!')
+            return redirect ('ecomm_app:list_category')
+    context = {
+        'form': form,
+    }
+    myTemplate = 'ecomm/updateCategory.html'
+    return render(request, myTemplate, context)
+
+
+def delete_category(request, id):
+    get_data = get_object_or_404(Category, id = id)
+    get_data.delete()
+    messages.success(request, f'Category deleted successfully!')
+    return redirect('ecomm_app:list_category')
+
+
+# SUB-CATEGORY
+def list_subcategory(request):
+    all_subcategories = Subcategory.objects.all().order_by('id')
+    query = request.GET.get("q")
+    if query:
+        all_subcategories = all_subcategories.filter(name__icontains = query)
+    context = {
+        'subcategories': all_subcategories
+    }
+    myTemplate = 'ecomm/listSubcategory.html'
+    return render (request, myTemplate, context)
+
+
+def add_subcategory(request):
+    form = addSubcategoryForm()
+    if request.method == 'POST':
+        form = addSubcategoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Sub-Category added successfully')
+            return redirect('ecomm_app:add_subcategory')
+        return redirect('ecomm_app:add_subcategory')
+    else:
+        form = addSubcategoryForm()
+    context = {
+        'form': form
+    }
+    myTemplate = 'ecomm/addSubcategory.html'
+    return render(request, myTemplate, context)
+
+def update_subcategory(request, id):
+    instance = get_object_or_404(Subcategory, id = id)
+    form = addSubcategoryForm(request.POST or None, instance = instance)
+    # print(form.product_name)
+    if request.method == 'POST':
+        form = addSubcategoryForm(request.POST, request.FILES, instance = instance)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Sub-Category has been updated successifully!')
+            return redirect ('ecomm_app:list_subcategory')
+    context = {
+        'form': form,
+    }
+    myTemplate = 'ecomm/updateSubcategory.html'
+    return render(request, myTemplate, context)
+
+def delete_subcategory(request, id):
+    get_data = get_object_or_404(Subcategory, id = id)
+    get_data.delete()
+    messages.success(request, f'Sub-Category deleted successfull!')
+    return redirect('ecomm_app:list_subcategory')

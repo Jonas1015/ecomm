@@ -2,26 +2,23 @@
 {% block title %} Product Details {% endblock %}
 {% block content %}
 
-<div class="outer_container"
-  style="
-    margin-bottom: 217px;
-    margin-top: 100px;
-  ">
+<div class="cart_container">
   <div class="row">
-    <div class="col-md-8 offset-2">
-      <div class="table-responsive text-nowrap">
+    <div class="col-md-8 offset-2 table-col">
+      <div class="content table-responsive text-nowrap">
         <h2>Order Summary</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Item title</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Total Item price</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div style="overflow-x:auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Item price</th>
+              </tr>
+            </thead>
+            <tbody>
             {% for order_item in object.items.all %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
@@ -51,22 +48,24 @@
             <td colspan="5">
               <a class="btn btn-primary float-right " href="/">Continue Shopping</a>
             </td>
-            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+              {% endfor %}
             {% if object.get_total %}
             <tr>
               <td colspan="4"><strong>Order Total</strong></td>
               <td><strong> $ {{ object.get_total }}</strong></td>
             </tr>
-            <tr>
-              <td colspan="5">
-                <a class="btn btn-warning float-right ml-2" href="{% url 'ecomm_app:checkout' %}">Proceed to Checkout</a>
-                <a class="btn btn-primary float-right " href="/">Continue Shopping</a>
-              </td>
-            </tr>
-            {% endif %}
           </tbody>
         </table>
-      </div>
+        </div>
+        <div class="buttons">
+          <a class="btn btn-warning float-right ml-2" href="{% url 'ecomm_app:checkout' %}">Proceed to Checkout</a>
+          <a class="btn btn-primary float-right " href="/">Continue Shopping</a>
+        </div>
+        {% endif %}
+        </div>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@ SECRET_KEY = 'asgrjduio2iin145$0lnku&u$wwfd8+k^m^h9-0rg)76b)juh('
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Application definition
 
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_countries',
     'ecomm_app',
-    'users',
+    # 'users',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -136,4 +137,4 @@ LOGIN_REDIRECT_URL = 'ecomm_app:home'
 
 LOGIN_URL = 'login'
 
-UPDATES_URL = 'update'
+# UPDATES_URL = 'update'

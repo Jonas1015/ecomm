@@ -1,0 +1,20 @@
+{% extends 'ecomm/base.html' %}
+{% block title %} Registration Pending {% endblock %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3 pt-4">
+
+    <p class="lead">
+        Thank you for registering in Shoppy.
+    </p>
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        {{ message }}
+    </div>
+
+
+</div><br><br><br><br><br><br><br>
+{% endblock %}

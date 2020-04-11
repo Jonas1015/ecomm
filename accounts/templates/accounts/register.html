@@ -1,0 +1,22 @@
+{% extends 'ecomm/base.html' %}
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+<div class="container text-center pt-5 pb-5">
+  <h1>Welcome to Shoppy</h1>
+  <p class="lead">
+    Create an account to have an access...
+  </p>
+  <div class="text-center">
+    <p class="font-weight-bold">
+    What are you intended to do? That is what makes you to choose between the two.
+    </p>
+    <a href="{% url 'accounts:register-customer' %}" class="btn btn-outline-success btn-lg mx-2">Customer</a>
+    <a href="{% url 'accounts:register-trader' %}" class="btn btn-outline-danger btn-lg mx-2">Trader</a>
+  </div><br><br>
+  <!-- <div class="jumbotron">
+  <h3>What is Fagrimacs?</h3>
+  <p>Fagrimacs is ......</p>
+  </div> -->
+</div><br>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'ecomm/base.html' %}
+{% block title %} Trader Profile {% endblock %}
+{% block content %}
+      <div class="profile-container">
+        <div class="row">
+          <div class="content col-md-12">
+            <div class="profile_card w3-card col-12 ">
+              <div class="elements ">
+                {% if trader_profile %}
+                <img class="img-profile rounded-circle" src="{{ trader_profile.profile_pic.url }}" alt="">
+                <h4>{{ trader_profile }}</h4>
+                <div class="my-3">
+                    <a class="btn btn-secondary" href="{{ trader_profile.get_profile_update_url }}">Edit Profile</a>
+                    <a class="btn btn-danger ml-2" href="#">Change Password</a>
+                </div>
+                {% endif %}
+              </div>
+              <div class="button">
+                <a class="btn btn-primary btn-block" href="#"><i class="fa fa-edit mr-3"></i> <strong>Update</strong></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock content %}

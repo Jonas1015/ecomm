@@ -1,0 +1,18 @@
+{% extends 'ecomm/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Customer Sign Up {% endblock %}
+
+{% block content %}
+  <div class="container col-md-6 offset-md-3 pt-5 pb-5">
+    <h2>Register as Customer</h2>
+    <form method="post" class="pt-4">
+      {% csrf_token %}
+      {{ form | crispy }}
+      <p>By continuing, you agree to Shoppy' <a href="#">Terms and condition</a> , <a href="#">Privacy policy</a></p>
+      <button type="submit" name="submit" class="btn btn-success mt-3 btn-lg">Register</button>
+    </form>
+    <div class="pt-3">
+      <p>Already registered? <a href="{% url 'accounts:login' %}">Login</a></p>
+    </div>
+  </div>
+{% endblock %}
