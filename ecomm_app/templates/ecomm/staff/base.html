@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
       {% load static %}
-      {% load cart_template_tags %}
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -17,42 +16,35 @@
     <nav class="w3-bar">
       <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item ">Shoppy</a>
       <div class="w3-right">
-        {% if user.is_authenticated %}
-          {% if user.is_customer %}
-          <a href="{% url 'ecomm_app:order-summary' %}" class="w3-bar-item">
-            <span class="badge-primary z-depth-1 pl-1 mr-1"> {{ request.user| cart_item_count }} </span>
-            <i class="fa fa-shopping-cart"></i>
-            <span class="clearfix ">Cart</span>
-          </a>
-          {% endif %}
-          {% endif %}
           {% if user.is_authenticated %}
-          {% if user.is_admin or user.is_trader %}
-          <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-user mr-3"></i> Dashboard</a>
-          {% elif user.is_customer %}
-          <a href="{% url 'accounts:profile'%}" class="w3-bar-item w3-hide-small"><i class="fa fa-user mr-3"></i> Profile</a>
-          {% endif %}
+          <a href="{% url 'accounts:profile' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-user mr-3"></i> Profile</a>
           <a href="{% url 'accounts:logout' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
-          {% else %}
-          <a href="{% url 'accounts:login' %}" class="w3-bar-item w3-hide-small">Login</a>
-          <a href="{% url 'accounts:register' %}" class="w3-bar-item w3-hide-small">Sign up</a>
           {% endif %}
           <a href="javascript:void(0)" class="w3-bar-item w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
       </div>
       <div id="demo" class="w3-bar-block w3-hide w3-right w3-hide-large w3-hide-medium">
         {% if user.is_authenticated %}
-          {% if user.is_admin or user.is_trader %}
-          <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Dashboard</a>
-          {% elif user.is_customer %}
-          <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Profile</a>
-          {% endif %}
+        <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Profile</a>
         <a href="{% url 'accounts:logout' %}" class="w3-bar-item "><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
-        {% else %}
-        <a href="{% url 'accounts:login' %}" class="w3-bar-item ">Login</a>
-        <a href="{% url 'accounts:register' %}" class="w3-bar-item ">Sign up</a>
         {% endif %}
       </div>
+      <div class="w3-sidebar w3-bar-block" style="width:13%">
+        <h3 class="w3-bar-item">Shoppy</h3>
+        <div class="w3-buttons">
+          <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item w3-button">Dashboard</a>
+          <a href="#" class="w3-bar-item w3-button">Orders</a>
+          <a href="#" class="w3-bar-item w3-button">Customers</a>
+          <a href="{% url 'ecomm_app:add_item' %}" class="w3-bar-item w3-button">Add Item</a>
+          <a href="{% url 'ecomm_app:add_category' %}" class="w3-bar-item w3-button">Add Category</a>
+          <a href="{% url 'ecomm_app:add_subcategory' %}" class="w3-bar-item w3-button">Add Subcategory</a>
+          <a href="{% url 'ecomm_app:list_item' %}" class="w3-bar-item w3-button">View Items</a>
+          <a href="{% url 'ecomm_app:list_category' %}" class="w3-bar-item w3-button">View Category</a>
+          <a href="{% url 'ecomm_app:list_subcategory' %}" class="w3-bar-item w3-button">View Subcategory</a>
+          <a href="#" class="w3-bar-item w3-button logout">Logout</a>
+        </div>
+      </div>
     </nav>
+  <div class="staff_container">
     {% if messages %}
        {% for message in messages %}
         <div style="margin: 60px;" class="alert alert-{{ message.tags }} dismissible fade show" role="alert">
@@ -63,8 +55,8 @@
         </div>
        {% endfor %}
      {% endif %}
-
-      {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
+</div>
 
       <!-- Footer -->
     <section id="footer">

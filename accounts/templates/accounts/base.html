@@ -25,11 +25,13 @@
         <div class="navbar-nav mr-auto"></div>
         <form class="form-inline">
           {% if user.is_authenticated %}
+            {% if user.is_customer %}
             <a href="{% url 'ecomm_app:order-summary' %}" class="mr-3">
               <span class="badge-primary z-depth-1 pl-1 mr-1"> {{ request.user| cart_item_count }} </span>
               <i class="fa fa-shopping-cart"></i>
               <span class="clearfix ">Cart</span>
             </a>
+            {% endif %}
             <a href="{% url 'profile' %}" class="mr-3"><i class="fa fa-cog"></i></a>
             <a href="{% url 'logout' %}" class=""><i class="fa fa-sign-in-alt"></i></a>
           {% else %}

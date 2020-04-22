@@ -11,22 +11,23 @@ from django.contrib.auth.models import (
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, first_name, last_name, password=None):
+    def create_user(self, username, email, first_name, last_name, password=None):
 
         if not email:
             raise ValueError('Users must have an email address')
         user = self.model(
+            username=username,
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
+            first_name=first_name, #hazina kazi hapa
+            last_name=last_name,  #hazina kazi hap
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password=None):
+    def create_superuser(self, username, email, first_name, last_name, password=None):
         user = self.create_user(
+            username,
             email,
             first_name=first_name,
             last_name=last_name,
@@ -39,13 +40,24 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+USERNAME_REGEX = '^[a-zA-Z0-9.+-]*$'
 
 class CustomUser(AbstractBaseUser):
+    username = models.CharField(
+        max_length=100,
+        validators = [
+            RegexValidator( regex = USERNAME_REGEX,
+                            message = 'Username must be alphanumeric or contain numbers',
+                            code='Invalid_username'
+                            )],
+        unique = True
+    )
     email = models.EmailField(
         verbose_name='Email Address',
         max_length=255,
         unique=True,
     )
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
@@ -57,11 +69,11 @@ class CustomUser(AbstractBaseUser):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name','last_name']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = [ 'email', 'first_name','last_name']
 
     def __str__(self):
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -90,7 +102,7 @@ def profile_pic_filename(instance, filename):
 class AdminProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number entered was not correctly formated.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, unique=True) # validators should be a list
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     company = models.CharField(max_length=30, blank=True)
     street_village = models.CharField(max_length=254, blank=True)
     district = models.CharField(max_length=254, blank=True)
@@ -112,7 +124,7 @@ class AdminProfile(models.Model):
 class TraderProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number entered was not correctly formated.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, unique=True) # validators should be a list
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     company = models.CharField(max_length=30, blank=True)
     street_village = models.CharField(max_length=254, blank=True)
     district = models.CharField(max_length=254, blank=True)
@@ -136,7 +148,7 @@ class TraderProfile(models.Model):
 class CustomerProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number entered was not correctly formated.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, unique=True) # validators should be a list
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     street_village = models.CharField(max_length=254, blank=True)
     district = models.CharField(max_length=254, blank=True)
     region = models.CharField(max_length=254, blank=True)

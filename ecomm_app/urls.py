@@ -10,6 +10,9 @@ from .views import (
     remove_single_item_from_cart,
     add_single_item_to_cart,
     CheckoutView,
+
+    dashboard,
+
     list_item,
     add_item,
     update_item,
@@ -40,6 +43,7 @@ urlpatterns = [
     path('add-single-item-to-cart/<slug>/', add_single_item_to_cart, name = 'add-single-item-to-cart'),
     path('checkout/', CheckoutView.as_view(), name = 'checkout'),
     # Staff Urls
+    path('staff/dashboard/',dashboard, name = 'dashboard'),
     path('staff/items/',list_item, name = 'list_item'),
     path('staff/add-item/',add_item, name = 'add_item'),
     path('staff/update-item/<slug>/',update_item, name = 'update_item'),

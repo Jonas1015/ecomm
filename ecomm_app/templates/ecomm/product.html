@@ -54,8 +54,10 @@
             </table>
             <div class="buttons">
                   {% if user.is_authenticated %}
+                  {% if user.is_customer %}
                     <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary">Add to Cart</a>
                     <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger">Remove from Cart</a>
+                  {% endif %}
                   {% endif %}
             </div>
             </div>

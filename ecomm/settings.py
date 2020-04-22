@@ -138,3 +138,16 @@ LOGIN_REDIRECT_URL = 'ecomm_app:home'
 LOGIN_URL = 'login'
 
 # UPDATES_URL = 'update'
+
+
+# Emails backend
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+    EMAIL_PORT = config('EMAIL_PORT', cast=int)
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')

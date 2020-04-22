@@ -5,7 +5,7 @@
 {% block content %}
   <div class="container col-md-6 offset-md-3 pt-5 pb-5">
     <h2>Register as Trader</h2>
-    <form method="post" class="pt-4">
+    <form method="post" class="pt-4" autocomplete="off" novalidate>
       {% csrf_token %}
       {{ form | crispy }}
       <p>By continuing, you agree to Shoppy's &nbsp <a href="#">Terms and condition</a> , <a href="#">Privacy policy</a></p>

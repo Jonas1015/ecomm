@@ -3,27 +3,73 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth import (
+    authenticate, get_user_model, password_validation,
+)
+# from django.contrib.auth import get_user_model
+from .models import CustomUser, TraderProfile, CustomerProfile, AdminProfile
 
-from .models import CustomUser
 
-
+# User = get_user_model()
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    # password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    # password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    # password1 = forms.CharField(label='Password', strip=False, widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
+    # password2 = forms.CharField(label='Password confirmation', strip=False, widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}))
+
+    error_messages = {
+        'password_mismatch': ('The two password fields didn’t match.'),
+    }
+    password1 = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label="Password confirmation",
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+        help_text="Enter the same password as before, for verification.",
+    )
+
+
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('username', 'email', 'first_name', 'last_name')
 
     def clean_password2(self):
-        # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords didn't match")
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
         return password2
+
+    def _post_clean(self):
+        super()._post_clean()
+        # Validate the password after self.instance is updated with form data
+        # by super().
+        password = self.cleaned_data.get('password2')
+        if password:
+            try:
+                password_validation.validate_password(password, self.instance)
+            except forms.ValidationError as error:
+                self.add_error('password2', error)
+    # def clean_password(self):
+    #     # Check that the two password entries match
+    #     password1 = self.cleaned_data.get('password1')
+    #     password2 = self.cleaned_data.get('password2')
+    #     if password1 and password2 and password1 != password2:
+    #         raise forms.ValidationError("Two passwords didn't match")
+    #     if len(password1) < 8:
+    #         raise forms.ValidationError("Password must have atleast 8 characters!")
+    #     return password2
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -43,7 +89,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'password', 'first_name', 'last_name', 'is_active', 'is_trader','is_customer', 'is_admin', 'is_eligible')
+        fields = ('username', 'email', 'password', 'first_name', 'last_name', 'is_active', 'is_trader','is_customer', 'is_admin', 'is_eligible')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -60,11 +106,11 @@ class CustomUserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'is_admin', 'is_customer', 'is_trader', 'is_eligible', )
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_admin', 'is_customer', 'is_trader', 'is_eligible', )
     list_filter = ('is_admin', 'is_customer', 'is_trader')
     readonly_fields = ('is_customer', 'is_trader', )
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('username','email', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name')}),
         ('User Type', {'fields': ('is_admin', 'is_customer', 'is_trader','is_eligible')}),
     )
@@ -73,11 +119,11 @@ class CustomUserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2'),
+            'fields': ('username', 'email', 'first_name', 'last_name', 'password1', 'password2'),
         }),
     )
-    search_fields = ('email', 'first_name', 'last_name',)
-    ordering = ('email', 'first_name', 'last_name', )
+    search_fields = ('username', 'email', 'first_name', 'last_name',)
+    ordering = ('username', 'email', 'first_name', 'last_name', )
     filter_horizontal = ()
 
     def get_form(self, request, obj=None, **kwargs):
@@ -87,10 +133,10 @@ class CustomUserAdmin(BaseUserAdmin):
 
         if not is_superuser:
             disabled_fields |= {
+                'username',
                 'email',
                 'is_admin',
                 'is_customer',
-                'is_trader',
                 'is_trader',
             }
 
@@ -135,7 +181,9 @@ class CustomUserAdmin(BaseUserAdmin):
 
 # Register the new UserAdmin...
 admin.site.register(CustomUser, CustomUserAdmin)
-
+admin.site.register(CustomerProfile)
+admin.site.register(TraderProfile)
+admin.site.register(AdminProfile)
 # Unregister the Group model from admin.
 # since we're not using Django's built-in permissions,
 admin.site.unregister(Group)

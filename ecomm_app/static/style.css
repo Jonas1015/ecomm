@@ -769,6 +769,69 @@ section .section-title {
     -webkit-text-decoration-skip: objects;
 }
 
+
+/* Staff Pages */
+/* Staff base */
+.w3-sidebar {
+  background: var(--theme);
+}
+.w3-sidebar .w3-buttons {
+  margin: 100px 0px 50px 0px;
+}
+
+.w3-sidebar .logout {
+  margin-top: 20px;
+}
+.staff_container {
+  margin: 2% 0 40% 15%;
+}
+/* Dashboard */
+
+.counters {
+  height: 30vh;
+  width: 100%;
+  position: relative;
+  top: 0vh;
+  left: 30px;
+  display: flex;
+}
+.counters .customer-counter, .order-counter, .delivered-counter {
+  /* background: var(--theme) !important; */
+  width: 20vw;
+  margin: 0 4vw 0 40px;
+  border-radius: 50px;
+}
+.counters .customer-counter {
+  background: orange;
+  color: #fff;
+}
+.counters .order-counter {
+  position: relative;
+  top: 5vh;
+  background: green;
+}
+.counters .delivered-counter {
+  background: blue;
+}
+.counters div .counter-text {
+  position: relative;
+  top: 20px;
+  left: 20%;
+}
+.counters div .counter-text .count {
+  position: relative;
+  left: 20%;
+  font-size: 80px;
+  color: #fff;
+}
+.counters div .counter-text  h2 {
+  position: relative;
+  top: 30px;
+  color: #fff;
+}
+.counters div .counter-text .customer-head, .count-head {
+  left: -22px;
+}
 /* #footer ul.social li{
 	padding: 3px 0;
 }

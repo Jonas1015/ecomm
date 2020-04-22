@@ -1,45 +1,56 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
-from django.views.generic.edit import UpdateView
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin, UserPassesTestMixin
-)
-from django.contrib.messages.views import SuccessMessageMixin
-
-from .models import TraderProfile, CustomerProfile
-from .forms import TraderProfileUpdateForm, CustomerProfileUpdateForm
-
-
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse
-from django.shortcuts import redirect, reverse, render
-from accounts.models import CustomUser
+from django.shortcuts import redirect, reverse, render, get_object_or_404
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import get_template, render_to_string
 from django.views.generic import TemplateView, View, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth import login, get_user_model, logout
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.core.mail import EmailMessage
-from django.template.loader import get_template, render_to_string
-from django.conf import settings
-
-from .forms import CustomerSignUpForm, TraderSignUpForm
-from .models import CustomerProfile, TraderProfile
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.conf import settings
+from .models import CustomUser
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+)
+from .models import (
+    TraderProfile,
+    CustomerProfile,
+    AdminProfile,
+)
+from .forms import (
+    TraderProfileUpdateForm,
+    CustomerProfileUpdateForm,
+    AdminProfileUpdateForm,
+    UserUpdateForm,
+    CustomerSignUpForm,
+    TraderSignUpForm,
+    UserLoginForm,
+)
 
 
-# class UserLoginView(LoginView):
-#     template_name = 'accounts/login.html'
-#
-#     def get_success_url(self):
-#         url = self.get_redirect_url()
-#         if url:
-#             return url
-#         else:
-#             return f'/superuser/'
+def loginView(request, *args, **kwargs):
+    form = UserLoginForm()
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST or None)
+        if form.is_valid():
+            user_obj = form.cleaned_data.get('user_obj')
+            login(request, user_obj)
+            return HttpResponseRedirect('/')
+    myTemplate = 'accounts/login.html'
+    context = {
+        'form':form
+    }
+    return render(request, myTemplate, context)
+
+
 
 
 class UserLogoutView(LogoutView):
@@ -50,70 +61,99 @@ class SignUpView(TemplateView):
     template_name = 'accounts/register.html'
 
 
-class CustomerSignUpView(View):
+# class CustomerSignUpView(View):
+#
+#     def get(self, request):
+#         return render(request, 'accounts/customer_signup.html', {
+#             'form': CustomerSignUpForm,
+#         })
+#
+#     def post(self, request):
+#         if request.method == 'POST':
+#             form = CustomerSignUpForm(request.POST or None)
+#             if form.is_valid():
+#                 user = form.save()
+#                 user.email = form.cleaned_data['email']
+#                 user.save()
+#                 # Create profile
+#                 customer_profile = CustomerProfile(user=user)
+#                 customer_profile.save()
+#                 # send confirmation email
+#                 token = account_activation_token.make_token(user)
+#                 user_id = urlsafe_base64_encode(force_bytes(user.id))
+#                 url = 'localhost:8000' + reverse('accounts:confirm-email', kwargs={'user_id': user_id, 'token': token})
+#                 message = get_template('accounts/account_activation_email.html').render({
+#                     'confirm_url': url
+#                 })
+#                 mail = EmailMessage('Shoppy Account Confirmation', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
+#                 mail.content_subtype = 'html'
+#                 mail.send()
+#
+#         return render(request, 'accounts/registration_pending.html', {
+#                     'message': f'A confirmation email has been sent to your email. Please confirm to finish registration.'
+#                 })
 
-    def get(self, request):
-        return render(request, 'accounts/customer_signup.html', {
-            'form': CustomerSignUpForm,
+def customer_signup(request):
+    form = CustomerSignUpForm(request.POST or None)
+    if form.is_valid():
+        user = form.save()
+        user.email = form.cleaned_data['email']
+        user.save()
+        # Create profile
+        customer_profile = CustomerProfile(user=user)
+        customer_profile.save()
+        # send confirmation email
+        token = account_activation_token.make_token(user)
+        user_id = urlsafe_base64_encode(force_bytes(user.id))
+        url = 'localhost:8000' + reverse('accounts:confirm-email', kwargs={'user_id': user_id, 'token': token})
+        message = get_template('accounts/account_activation_email.html').render({
+            'confirm_url': url
         })
+        mail = EmailMessage('Shoppy Account Confirmation', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
+        mail.content_subtype = 'html'
+        mail.send()
 
-    def post(self, request):
-        if request.method == 'POST':
-            form = CustomerSignUpForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                user.email = form.cleaned_data['email']
-                user.save()
-                # Create profile
-                customer_profile = CustomerProfile(user=user)
-                customer_profile.save()
-                # send confirmation email
-                token = account_activation_token.make_token(user)
-                user_id = urlsafe_base64_encode(force_bytes(user.id))
-                url = 'localhost:8000' + reverse('accounts:confirm-email', kwargs={'user_id': user_id, 'token': token})
-                message = get_template('accounts/account_activation_email.html').render({
-                    'confirm_url': url
+        return render(request, 'accounts/registration_pending.html', {
+                'message': f'A confirmation email has been sent to your email. Please confirm to finish registration.'
                 })
-                mail = EmailMessage('Shoppy Account Confirmation', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
-                mail.content_subtype = 'html'
-                mail.send()
+    # form = CustomerSignUpForm()
+    myTemplate = 'accounts/customer_signup.html'
+    context ={
+        'form': form
+    }
+    return render(request, myTemplate,context)
+
+
+def trader_signup(request):
+    form = TraderSignUpForm(request.POST or None)
+    if form.is_valid():
+        user = form.save()
+        user.email = form.cleaned_data['email']
+        user.save()
+        # Create profile
+        trader_profile = TraderProfile(user=user)
+        trader_profile.save()
+        # send confirmation email
+        token = account_activation_token.make_token(user)
+        user_id = urlsafe_base64_encode(force_bytes(user.id))
+        url = 'localhost:8000' + reverse('accounts:confirm-email', kwargs={'user_id': user_id, 'token': token})
+        message = get_template('accounts/account_activation_email.html').render({
+            'confirm_url': url
+        })
+        mail = EmailMessage('Shoppy Account Confirmation', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
+        mail.content_subtype = 'html'
+        mail.send()
 
         return render(request, 'accounts/registration_pending.html', {
                     'message': f'A confirmation email has been sent to your email. Please confirm to finish registration.'
-                })
+            })
+    myTemplate = 'accounts/trader_signup.html'
+    context ={
+        'form': form
+    }
+    return render(request, myTemplate,context)
 
 
-class TraderSignUpView(View):
-
-    def get(self, request):
-        return render(request, 'accounts/trader_signup.html', {
-            'form': TraderSignUpForm,
-        })
-
-    def post(self, request):
-        if request.method == 'POST':
-            form = TraderSignUpForm(request.POST)
-            if form.is_valid():
-                user = form.save()
-                user.email = form.cleaned_data['email']
-                user.save()
-                # Create profile
-                trader_profile = TraderProfile(user=user)
-                trader_profile.save()
-                # send confirmation email
-                token = account_activation_token.make_token(user)
-                user_id = urlsafe_base64_encode(force_bytes(user.id))
-                url = 'localhost:8000' + reverse('accounts:confirm-email', kwargs={'user_id': user_id, 'token': token})
-                message = get_template('accounts/account_activation_email.html').render({
-                    'confirm_url': url
-                })
-                mail = EmailMessage('Shoppy Account Confirmation', message, to=[user.email], from_email=settings.EMAIL_HOST_USER)
-                mail.content_subtype = 'html'
-                mail.send()
-
-        return render(request, 'accounts/registration_pending.html', {
-                    'message': f'A confirmation email has been sent to your email. Please confirm to finish registration.'
-                })
 
 class ConfirmRegistrationView(View):
     def get(self, request, user_id, token):
@@ -133,29 +173,11 @@ class ConfirmRegistrationView(View):
         return render(request, 'accounts/registration_complete.html', context)
 
 
-
 class TraderHomeView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = '../ecomm_app/templates/home.html'
 
     def test_func(self):
         if self.request.user.is_trader:
-            return True
-        return False
-
-
-class TraderProfileView(DetailView):
-    model = TraderProfile
-    template_name = 'accounts/trader_profile.html'
-    context_object_name = 'trader_profile'
-
-
-class TraderProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
-    model = TraderProfile
-    form_class = TraderProfileUpdateForm
-    success_message = "Your profile has been updated successful."
-
-    def test_func(self):
-        if self.request.user.traderprofile == TraderProfile.objects.get(user_id=self.kwargs['pk']):
             return True
         return False
 
@@ -168,20 +190,92 @@ class CustomerHomeView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
             return True
         return False
 
+@login_required
+def ProfileView(request):
 
-class CustomerProfileView(DetailView):
-    model = CustomerProfile
-    template_name = 'accounts/customer_profile.html'
-    context_object_name = 'customer_profile'
+    if request.user.is_admin:
+        profile = AdminProfile.objects.get(user = request.user)
+    elif request.user.is_customer:
+        profile = CustomerProfile.objects.get(user = request.user)
+    elif request.user.is_trader:
+        profile = TraderProfile.objects.get(user = request.user)
+    else:
+        message = 'You have no permission to view this page'
+        context = {
+            'message': message
+        }
+        return render(request, 'accounts/profile.html', context)
+    if profile.phone_number and profile.region and profile.district and profile.street_village:
+        profile.user.is_eligible = True
+        profile.user.save()
+    else:
+        profile.user.is_eligible = False
+        profile.user.save()
+    context = {
+        'profile': profile,
+    }
 
+    return render(request, 'accounts/profile.html', context)
 
-class CustomerProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
-    model = CustomerProfile
-    form_class = CustomerProfileUpdateForm
-    success_message = "Your profile has been updated successful."
+@login_required
+def ProfileUpdateView(request):
+    user_form = UserUpdateForm(instance = request.user)
+    if request.user.is_admin:
+        profile_form = AdminProfileUpdateForm(instance = request.user.adminprofile)
+        profile = AdminProfile.objects.get(user = request.user)
 
+    elif request.user.is_customer:
+        profile_form = CustomerProfileUpdateForm(instance = request.user.customerprofile)
+        profile = CustomerProfile.objects.get(user = request.user)
 
-    def test_func(self):
-        if self.request.user.customerprofile == CustomerProfile.objects.get(user_id=self.kwargs['pk']):
-            return True
-        return False
+    elif request.user.is_trader:
+        profile_form = TraderProfileUpdateForm(instance = request.user.traderprofile)
+        profile = TraderProfile.objects.get(user = request.user)
+
+    else :
+        messages.warning(request, f'You have no permission to view this page')
+        return redirect('ecomm_app:home')
+
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance = request.user)
+
+        if request.user.is_admin:
+            profile_form = AdminProfileUpdateForm(request.POST,
+                                        request.FILES,
+                                        instance = request.user.adminprofile)
+            profile = AdminProfile.objects.get(user = request.user)
+
+        elif request.user.is_customer:
+            profile_form = CustomerProfileUpdateForm(request.POST,
+                                        request.FILES, instance = request.user.customerprofile)
+            profile = CustomerProfile.objects.get(user = request.user)
+        elif request.user.is_trader:
+            profile_form = TraderProfileUpdateForm(request.POST,
+                                        request.FILES, instance = request.user.traderprofile)
+            profile = TraderProfile.objects.get(user = request.user)
+        else:
+            return redirect('accounts:profile')
+            #Saving my newly updated forms
+        if profile_form.is_valid() and user_form.is_valid():
+            if request.user.is_admin:
+                profiles = AdminProfile.objects.all()
+            elif request.user.is_customer:
+                profiles = CustomerProfile.objects.all()
+            elif request.user.is_trader:
+                profiles = TraderProfile.objects.all()
+            for profile in profiles:
+                if profile.phone_number:
+                    if profile_form.cleaned_data['phone_number'] == profile.phone_number:
+                        messages.info(request, f'This number is already used by someone!')
+                        return redirect('accounts:profile-update')
+            profile_form.save()
+            user_form.save()
+            messages.success(request, f'You have successfully updated your profile! ')
+            return redirect('accounts:profile')
+
+    context = {
+        'profile_form': profile_form,
+        'user_form': user_form,
+        'profile': profile,
+        }
+    return render(request, 'accounts/update.html', context)

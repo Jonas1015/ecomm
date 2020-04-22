@@ -1,0 +1,64 @@
+{% extends 'ecomm/staff/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="dash_container">
+  <div class="row">
+    <div class="col-12">
+      <div class="counters row">
+        <div class="customer-counter ">
+          <div class="counter-text">
+          <h1 class="count">{{ orders }}</h1>
+            <h2 class="customer-head">Pending Orders</h2>
+          </div>
+        </div>
+        <div class="order-counter ">
+          <div class="counter-text">
+            <h1 class="count">{{ orders }}</h1>
+            <h2 class="count-head">Delivered Orders</h2>
+          </div>
+        </div>
+        <div class="delivered-counter">
+          <div class="counter-text">
+            <h1 class="count">{{ count }}</h1>
+            <h2 class="delivered-head">Total Orders</h2>
+          </div>
+        </div>
+      </div>
+      <div class="data row">
+        <table class="table">
+          <thead>
+            <th>Customer Name</th>
+            <th>Quantity</th>
+            <th>Phone Number</th>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>{{item.user.first_name}} {{item.user.last_name}}</td>
+                <td>{{item}}</td>
+                {% if user.is_admin %}
+                  {% if item.user.customerprofile %}
+                    {% if item.user.customerprofile.phone_number %}
+                      <td>{{ item.user.customerprofile.phone_number }}</td>
+                    {% else %}
+                      <td> Customer has no Number</td>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                <td>Contact Your Admin</td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
