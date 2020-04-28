@@ -3,20 +3,19 @@
 {% block title %}Staff | Update Category {% endblock %}
 {% block content %}
 
-<div class="addItem_container mt-5  pt-3">
+<div class="add_container mt-5  pt-3">
   <div class="row">
-    <div class="col-md-12">
-        <div class="w3-card mt-5 mb-5">
+    <div class="col-md-12 column col-12">
+        <div class="w3-card ucat-card mt-5 pb-5">
           <h1>Update Category</h1>
-          <form method="post" enctype = "multipart/form-data">
+          <form class="pb-5" method="post" enctype = "multipart/form-data">
             {% csrf_token %}
             {{ form| crispy }}
             <hr>
-            <button class="btn block" type="submit" name="button">Update</button>
+            <button class="btn btn-block" type="submit" name="button">Add</button>
           </form>
         </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

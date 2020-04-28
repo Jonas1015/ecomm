@@ -1,0 +1,71 @@
+{% extends 'ecomm/staff/base.html' %}
+{% block title %}Staff | Items{% endblock %}
+{% block content %}
+
+<div class="outer-container">
+<div class="container">
+  <div class="row">
+    <div class="contents">
+      <div class="col-md-12">
+        <div class="heading">
+          <h3>YOUR ORDERS</h3>
+        </div>
+        {% if items %}
+        <div class="search-form mt-5">
+          <form class="form-inline  ml-2 block" method="GET">
+            <input type="text" name = "q" placeholder="Search Order">
+            <div class="searchBar ml-4">
+              <button type="submit" class="btn btn-block ">Search</button>
+            </div>
+          </form>
+        </div>
+        <table class="table table-sm table-bordered table-striped table-hover">
+          <tr>
+            <thead>
+              <th>Customer Name</th>
+              <th>Quantity</th>
+              <th>Price@</th>
+              <th>Phone Number</th>
+              <th>Delivered</th>
+            </thead>
+          </tr>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>{{item.user.first_name}} {{item.user.last_name}}</td>
+                <td>{{item}}</td>
+                {% if item.ite.discount_price %}
+                <td>{{item.item.discount_price}}</td>
+                {% else %}
+                <td>{{item.item.price}}</td>
+                {% endif %}
+                {% if user.is_admin %}
+                  {% if item.user.customerprofile %}
+                    {% if item.user.customerprofile.phone_number %}
+                      <td>{{ item.user.customerprofile.phone_number }}</td>
+                    {% else %}
+                      <td> Customer has no Number</td>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                <td>Contact Your Admin</td>
+                {% endif %}
+                {% if item.delivered %}
+                <td>Delivered</td>
+                {% else %}
+                <td>Pending</td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+              {% else %}
+                <h1>Ooopps!! You have no Orders!</h1>
+              {% endif %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

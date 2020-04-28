@@ -15,11 +15,11 @@
   </head>
   <body>
     <nav class="w3-bar">
-      <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item ">Shoppy</a>
+      <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item w3-mobile ">Shoppy</a>
       <div class="w3-right">
         {% if user.is_authenticated %}
           {% if user.is_customer %}
-          <a href="{% url 'ecomm_app:order-summary' %}" class="w3-bar-item">
+          <a href="{% url 'ecomm_app:order-summary' %}" class="w3-bar-item w3-mobile">
             <span class="badge-primary z-depth-1 pl-1 mr-1"> {{ request.user| cart_item_count }} </span>
             <i class="fa fa-shopping-cart"></i>
             <span class="clearfix ">Cart</span>
@@ -39,17 +39,17 @@
           {% endif %}
           <a href="javascript:void(0)" class="w3-bar-item w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
       </div>
-      <div id="demo" class="w3-bar-block w3-hide w3-right w3-hide-large w3-hide-medium">
+      <div id="demo" class="w3-bar-block w3-hide w3-hide-large w3-hide-medium">
         {% if user.is_authenticated %}
           {% if user.is_admin or user.is_trader %}
-          <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Dashboard</a>
+          <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item w3-mobile"><i class="fa fa-user mr-3"></i> Dashboard</a>
           {% elif user.is_customer %}
-          <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Profile</a>
+          <a href="{% url 'accounts:profile' %}" class="w3-bar-item w3-mobile"><i class="fa fa-user mr-3"></i> Profile</a>
           {% endif %}
-        <a href="{% url 'accounts:logout' %}" class="w3-bar-item "><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
+        <a href="{% url 'accounts:logout' %}" class="w3-bar-item w3-mobile "><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
         {% else %}
-        <a href="{% url 'accounts:login' %}" class="w3-bar-item ">Login</a>
-        <a href="{% url 'accounts:register' %}" class="w3-bar-item ">Sign up</a>
+        <a href="{% url 'accounts:login' %}" class="w3-bar-item w3-mobile">Login</a>
+        <a href="{% url 'accounts:register' %}" class="w3-bar-item w3-mobile ">Sign up</a>
         {% endif %}
       </div>
     </nav>

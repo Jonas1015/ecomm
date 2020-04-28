@@ -11,13 +11,15 @@
           <h3>ALL SUB-CATEGORIES</h3>
         </div>
         {% if subcategories %}
-          <form class="form-inline mt-5 ml-2 block" method="GET">
-            <div class="searchBar">
-              <input type="text" name = "q" placeholder="Search Sub-Category">
-              <button type="submit" class="btn btn-primary btnColor mb-2">Search</button>
+        <div class="search-form mt-5">
+          <form class="form-inline  ml-2 block" method="GET">
+            <input type="text" name = "q" placeholder="Search Category">
+            <div class="searchBar ml-4">
+              <button type="submit" class="btn btn-block ">Search</button>
             </div>
-        </form>
-        <table class="table table-sm table-bordered table-hover">
+          </form>
+        </div>
+        <table class="table table-sm table-striped table-bordered table-hover">
             <tr>
                 <!-- <thead class="thead-dark"> -->
                 <thead>
@@ -32,7 +34,7 @@
                   <td>{{forloop.counter}}</td>
                   <td>{{subcategory.name}}</td>
                   <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="btn-group action" role="group" aria-label="Basic example">
                       <a href="{% url 'ecomm_app:update_subcategory' subcategory.id %}"><button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button></a>
                       <a href="#"><button type="button" class="btn btn-info"><i class="fa fa-eye"></i></button></a>
                       <a href="{% url 'ecomm_app:delete_subcategory' subcategory.id %}" onclick="return confirm('Seriously Delete this Category!?');"><button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button></a>

@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav class="w3-bar">
-      <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item ">Shoppy</a>
+      <a href="{% url 'ecomm_app:home' %}" class="navbar-brand w3-bar-item w3-hide-small">Shoppy</a>
       <div class="w3-right">
           {% if user.is_authenticated %}
           <a href="{% url 'accounts:profile' %}" class="w3-bar-item w3-hide-small"><i class="fa fa-user mr-3"></i> Profile</a>
@@ -22,27 +22,45 @@
           {% endif %}
           <a href="javascript:void(0)" class="w3-bar-item w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
       </div>
-      <div id="demo" class="w3-bar-block w3-hide w3-right w3-hide-large w3-hide-medium">
+      <div id="demo" class="w3-bar-block w3-hide w3-hide-large w3-hide-medium w3-mobile">
         {% if user.is_authenticated %}
-        <a href="{% url 'accounts:profile' %}" class="w3-bar-item "><i class="fa fa-user mr-3"></i> Profile</a>
-        <a href="{% url 'accounts:logout' %}" class="w3-bar-item "><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
+        <a href="{% url 'ecomm_app:home' %}" class="w3-bar-item w3-mobile w3-hide-medium">SHOPPY</a>
+        <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item w3-mobile w3-hide-medium">Dashboard</a>
+        <a href="{% url 'accounts:profile' %}" class="w3-bar-item w3-mobile w3-hide-medium ">Profile</a>
+        <a href="{% url 'ecomm_app:orders' %}" class="w3-bar-item w3-hide-medium w3-mobile">Orders</a>
+        <!-- <a href="#" class="w3-bar-item w3-hide-medium w3-mobile">Customers</a> -->
+        <a href="{% url 'ecomm_app:add_item' %}" class="w3-bar-item w3-hide-medium w3-mobile">Add Item</a>
+        <a href="{% url 'ecomm_app:add_category' %}" class="w3-bar-item w3-hide-medium w3-mobile">Add Category</a>
+        <a href="{% url 'ecomm_app:add_subcategory' %}" class="w3-bar-item w3-hide-medium w3-mobile">Add Subcategory</a>
+        <a href="{% url 'ecomm_app:list_item' %}" class="w3-bar-item w3-hide-medium w3-mobile">View Items</a>
+        <a href="{% url 'ecomm_app:list_category' %}" class="w3-bar-item w3-hide-medium  w3-mobile">View Category</a>
+        <a href="{% url 'ecomm_app:list_subcategory' %}" class="w3-bar-item w3-hide-medium w3-mobile">View Subcategory</a>
+        <a href="{% url 'accounts:logout' %}" class="w3-bar-item w3-mobile"><i class="fa fa-sign-in-alt mr-3"></i>Logout</a>
         {% endif %}
       </div>
-      <div class="w3-sidebar w3-bar-block" style="width:13%">
-        <h3 class="w3-bar-item">Shoppy</h3>
+      <div class="w3-sidebar w3-bar-block w3-hide-small" style="width:13%">
+        <a href="{% url 'ecomm_app:home' %}" class="w3-bar-item"><h3>Shoppy</h3></a>
         <div class="w3-buttons">
-          <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item w3-button">Dashboard</a>
-          <a href="#" class="w3-bar-item w3-button">Orders</a>
-          <a href="#" class="w3-bar-item w3-button">Customers</a>
-          <a href="{% url 'ecomm_app:add_item' %}" class="w3-bar-item w3-button">Add Item</a>
-          <a href="{% url 'ecomm_app:add_category' %}" class="w3-bar-item w3-button">Add Category</a>
-          <a href="{% url 'ecomm_app:add_subcategory' %}" class="w3-bar-item w3-button">Add Subcategory</a>
-          <a href="{% url 'ecomm_app:list_item' %}" class="w3-bar-item w3-button">View Items</a>
-          <a href="{% url 'ecomm_app:list_category' %}" class="w3-bar-item w3-button">View Category</a>
-          <a href="{% url 'ecomm_app:list_subcategory' %}" class="w3-bar-item w3-button">View Subcategory</a>
-          <a href="#" class="w3-bar-item w3-button logout">Logout</a>
+          <a href="{% url 'ecomm_app:dashboard' %}" class="w3-bar-item ">Dashboard</a>
+          <a href="{% url 'ecomm_app:orders' %}" class="w3-bar-item ">Orders</a>
+          <!-- <a href="#" class="w3-bar-item ">Customers</a> -->
+          <a href="{% url 'ecomm_app:add_item' %}" class="w3-bar-item ">Add Item</a>
+          <a href="{% url 'ecomm_app:add_category' %}" class="w3-bar-item ">Add Category</a>
+          <a href="{% url 'ecomm_app:add_subcategory' %}" class="w3-bar-item ">Add Subcategory</a>
+          <a href="{% url 'ecomm_app:list_item' %}" class="w3-bar-item ">View Items</a>
+          <a href="{% url 'ecomm_app:list_category' %}" class="w3-bar-item">View Category</a>
+          <a href="{% url 'ecomm_app:list_subcategory' %}" class="w3-bar-item">View Subcategory</a>
+          <a href="{% url 'accounts:logout' %}" class="w3-bar-item logout">Logout</a>
         </div>
       </div>
+      <!-- <div class="w3-dropdown-hover w3-mobile">
+         <button class="w3-button">Dropdown <i class="fa fa-caret-down"></i></button>
+         <div class="w3-dropdown-content w3-bar-block w3-dark-grey">
+           <a href="#" class="w3-bar-item w3-button w3-mobile">Link 1</a>
+           <a href="#" class="w3-bar-item w3-button w3-mobile">Link 2</a>
+           <a href="#" class="w3-bar-item w3-button w3-mobile">Link 3</a>
+         </div>
+       </div> -->
     </nav>
   <div class="staff_container">
     {% if messages %}

@@ -123,6 +123,8 @@ class OrderItem(models.Model):
     ordered = models.BooleanField(default = False)
     item = models.ForeignKey(Item, on_delete = models.CASCADE)
     quantity = models.IntegerField(default = 1)
+    delivered = models.BooleanField(default = False)
+    delivered_date = models.DateTimeField(default = datetime.now())
 
     def __str__(self):
         return f"{self.quantity} of {self.item.title}"
@@ -148,11 +150,9 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add = True)
     ordered = models.BooleanField(default = False)
     ordered_date = models.DateTimeField()
-    delivered = models.BooleanField(default = False)
     billing_address = models.ForeignKey(
     'BillingAddress', on_delete = models.SET_NULL, blank = True, null = True
     )
-    delivered_date = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name

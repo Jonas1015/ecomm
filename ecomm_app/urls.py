@@ -12,6 +12,7 @@ from .views import (
     CheckoutView,
 
     dashboard,
+    orders,
 
     list_item,
     add_item,
@@ -44,6 +45,7 @@ urlpatterns = [
     path('checkout/', CheckoutView.as_view(), name = 'checkout'),
     # Staff Urls
     path('staff/dashboard/',dashboard, name = 'dashboard'),
+    path('staff/orders/',orders, name = 'orders'),
     path('staff/items/',list_item, name = 'list_item'),
     path('staff/add-item/',add_item, name = 'add_item'),
     path('staff/update-item/<slug>/',update_item, name = 'update_item'),

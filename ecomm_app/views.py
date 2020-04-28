@@ -252,29 +252,28 @@ class CheckoutView(View):
 def dashboard(request):
     if request.user.is_admin or request.user.is_trader:
         orders = Order.objects.filter(ordered=True)
-        # if orders:
-        #     for order in orders:
-        #         items = order.items.all()
-        #         print(order.items)
-        #         for item in items:
-        #             if item.item.seller == request.user:
-
-
         count = 0
+        count_pending = 0
+        count_delivered = 0
         items_list = []
         for order in orders:
             items = order.items.all()
-            print(items)
+            # print(items)
             for item in items:
                 if item.item.seller == request.user:
                     print(item.user)
+                    # print(item.orders.delivered==True)
                     count += 1
-                    items_list.append(item)
+                    if item.delivered == True:
+                        count_delivered += 1
+                    else:
+                        count_pending += 1
 
         myTemplate = 'ecomm/staff/dashboard.html'
         context = {
              'count': count,
-             'items': items_list,
+             'count_pending': count_pending,
+             'count_delivered': count_delivered,
         }
         return render(request, myTemplate, context)
     else:
@@ -286,8 +285,14 @@ def list_item(request):
     if request.user.is_admin or request.user.is_trader:
         all_items = Item.objects.filter(seller = request.user.id).order_by('id')
         query = request.GET.get("q")
+        items = []
         if query:
-            all_items = all_items.filter(title__icontains = query)
+            if all_items.filter(title__icontains = query):
+                all_items = all_items.filter(title__icontains = query)
+            for item in all_items:
+                if item.category.name == query:
+                    items.append(item)
+                    all_items = items
         context = {
             'items': all_items
         }
@@ -489,6 +494,31 @@ def delete_subcategory(request, id):
         get_data.delete()
         messages.success(request, f'Sub-Category deleted successfull!')
         return redirect('ecomm_app:list_subcategory')
+    else:
+        messages.info(request, f'You requested the wrong page!')
+        return redirect('ecomm_app:home')
+
+
+def orders(request):
+    if request.user.is_admin or request.user.is_trader:
+        orders = Order.objects.filter(ordered=True)
+        query = request.GET.get("q")
+        # if query:
+        #     orders = orders.filter(user__icontains = query)
+        items_list = []
+        for order in orders:
+            items = order.items.all()
+            print(items)
+            for item in items:
+                if item.item.seller == request.user:
+                    print(item.user)
+                    items_list.append(item)
+
+        myTemplate = 'ecomm/staff/orders.html'
+        context = {
+             'items': items_list,
+        }
+        return render(request, myTemplate, context)
     else:
         messages.info(request, f'You requested the wrong page!')
         return redirect('ecomm_app:home')

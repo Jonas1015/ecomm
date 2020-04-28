@@ -772,18 +772,22 @@ section .section-title {
 
 /* Staff Pages */
 /* Staff base */
+nav div a {
+  text-align: left !important;
+  margin: 20px 0 20px 0;
+}
 .w3-sidebar {
   background: var(--theme);
 }
 .w3-sidebar .w3-buttons {
-  margin: 100px 0px 50px 0px;
+  margin: 40px 0px 50px 0px;
 }
 
 .w3-sidebar .logout {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .staff_container {
-  margin: 2% 0 40% 15%;
+  margin: 2% 0 180% 15%;
 }
 /* Dashboard */
 
@@ -832,6 +836,239 @@ section .section-title {
 .counters div .counter-text .customer-head, .count-head {
   left: -22px;
 }
+.data .dash-table {
+  position: relative;
+  width: 40%;
+  height: auto;
+  top: 15vh;
+  left: 0px;
+}
+@media (max-width:586px) {
+  .staff_container {
+    margin: 2% 0 180% 15%;
+  }
+
+  .counters {
+    width: 570%;
+    position: relative;
+    top: 0vh;
+    left: -12%;
+    display: grid;
+    grid-template-columns:12 12 12;
+
+  }
+  .counters .customer-counter, .order-counter, .delivered-counter {
+    /* background: var(--theme) !important; */
+    width: 19.8%;
+    margin: 0 0 40px ;
+    border-radius: 10px;
+    position: relative;
+  }
+  .counters .customer-counter {
+    background: orange;
+    color: #fff;
+    height: 30vh;
+  }
+  .counters .order-counter {
+    position: relative;
+    top: 0vh;
+    background: green;
+    height: 30vh;
+  }
+  .counters .delivered-counter {
+    background: blue;
+    height: 30vh;
+  }
+  .counters div .counter-text {
+    position: relative;
+    top: 15px;
+    left: 25%;
+  }
+  .counters div .counter-text .count {
+    position: relative;
+    left: 20%;
+    font-size: 80px;
+    color: #fff;
+  }
+  .counters div .counter-text  h2 {
+    position: relative;
+    top: 10px;
+    left: 10px;
+    color: #fff;
+  }
+  .data .dash-table {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    top: 80vh;
+    left: -30px;
+  }
+}
+/* Categories | Sub-Categories | Items Listings pages */
+.search-form {
+  position: relative;
+  /* left: -8px; */
+  margin: 0px 0px 40px 0px;
+  width: 70.5vw;
+  border: 1px solid var(--theme);
+  padding: 1px;
+  border-radius: 20px;
+}
+.search-form input {
+  width: 60.5vw;
+  height: 4vh;
+  border: None;
+}
+.search-form .searchBar {
+  background: var(--theme);
+  width: 100px;
+  margin: 2px;
+  border-radius: 30px;
+}
+.search-form .searchBar .btn {
+  color: #fff;
+}
+table tbody td .btn-group {
+  border-radius: 0px;
+}
+table tbody td .btn-group .btn {
+  border-radius: 0px;
+}
+@media (max-width:586px) {
+  .search-form {
+    position: relative;
+    left: -16vw;
+    margin: 0px 0px 40px 0px;
+    width: 95vw;
+    border: 1px solid var(--theme);
+    padding: 1px;
+    border-radius: 20px;
+  }
+  .search-form input {
+    width: 60.5vw;
+    height: 4vh;
+    border: None;
+  }
+  .search-form .searchBar {
+    background: var(--theme);
+    width: 100px;
+    margin: 2px;
+    border-radius: 30px;
+  }
+  .search-form .searchBar .btn {
+    color: #fff;
+  }
+  .table {
+    position: relative;
+    left:-70px;
+    height: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+    overflow-x: auto;
+  }
+  table tbody td .btn-group {
+    border-radius: 0px;
+  }
+  table tbody td .btn-group .btn {
+    border-radius: 0px;
+  }
+}
+
+/* Add Category| Sub-Category | Item */
+.add_container .row .column .w3-card {
+  position: relative;
+  left: 10vw;
+  width: 80%;
+  height: 45vh;
+}
+.add_container .row .column .w3-card h1 {
+  position: relative;
+  left: 35%;
+}
+.add_container .row .column .w3-card form {
+  padding: 20px 40px ;
+}
+.add_container .row .column .w3-card form input {
+  border-radius: 20px;
+}
+.add_container .row .column .w3-card button {
+  background: var(--theme);
+  color: #fff;
+  margin-bottom: 40px;
+}
+.add_container .row .column .item-card {
+  position: relative;
+  left: 10px;
+  width: 97%;
+  height: 160vh;
+}
+.add_container .row .column .usub-card {
+  position: relative;
+  height: 55vh;
+}
+@media (max-width: 586px) {
+  .add_container .row .column .w3-card {
+    position: relative;
+    left: -10vw;
+    width: 107%;
+    height: 45vh;
+  }
+  .add_container .row .column .item-card {
+    position: relative;
+    left: -10vw;
+    width: 107%;
+    height: 170vh;
+  }
+  .add_container .row .column .item-card form .custom-file label{
+    margin-top: 50px;
+  }
+  .add_container .row .column .ucat-card {
+    position: relative;
+    left: -10vw;
+    width: 107%;
+    height: 55vh;
+  }
+  .add_container .row .column .w3-card h1 {
+    position: relative;
+    left: 22%;
+  }
+  .add_container .row .column .ucat-card h1 {
+    position: relative;
+    left: 10vw;
+  }
+  .add_container .row .column .ucat-card form .custom-file label{
+    margin-top: 50px;
+  }
+  .add_container .row .column .usub-card {
+    height: 65vh;
+  }
+  .add_container .row .column .usub-card h1 {
+    position: relative;
+    left: 3vw;
+  }
+  .add_container .row .column .usub-card form .custom-file label{
+    margin-top: 50px;
+  }
+  .add_container .row .column .w3-card form {
+    padding: 20px 20px ;
+  }
+  .add_container .row .column .w3-card form input {
+    border-radius: 20px;
+  }
+  .add_container .row .column .w3-card button {
+    background: var(--theme);
+    color: #fff;
+    border-radius: 20px;
+  }
+}
+
+
 /* #footer ul.social li{
 	padding: 3px 0;
 }
